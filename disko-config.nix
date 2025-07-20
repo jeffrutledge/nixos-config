@@ -22,9 +22,13 @@
               content = {
                 type = "luks";
                 name = "luksSwap";
+                settings = {
+                  allowDiscards = true;
+                  bypassWorkqueues = true;
+                };
                 content = {
                   type = "swap";
-		  resumeDevice = true;
+                  resumeDevice = true;
                 };
               };
             };
@@ -33,6 +37,10 @@
               content = {
                 type = "luks";
                 name = "luksRoot";
+                settings = {
+                  allowDiscards = true;
+                  bypassWorkqueues = true;
+                };
                 content = {
                   type = "btrfs";
                   extraArgs = [ "-f" ];
