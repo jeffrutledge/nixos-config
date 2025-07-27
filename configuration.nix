@@ -11,7 +11,7 @@
   ];
 
   boot.loader = {
-    canTouchEfiVariables = true;
+    efi.canTouchEfiVariables = true;
     systemd-boot.enable = true;
   };
 
