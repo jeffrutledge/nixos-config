@@ -15,6 +15,19 @@
     systemd-boot.enable = true;
   };
 
+  services.userborn = {
+    enable = true;
+  };
+
+  users.users.jrutledge = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    password = "1234";
+    extraGroups = [
+      "wheel"
+    ];
+  };
+
   environment.systemPackages = map lib.lowPrio [
     pkgs.curl
     pkgs.gitMinimal
