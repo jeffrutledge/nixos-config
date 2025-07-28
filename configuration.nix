@@ -15,14 +15,16 @@
     systemd-boot.enable = true;
   };
 
-  services.userborn = {
-    enable = true;
-  };
+  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+
+  services.userborn.enable = true;
+
+  programs.zsh.enable = true;
 
   users.users.jrutledge = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    password = "1234";
+    password = "12345";
     extraGroups = [
       "wheel"
     ];
