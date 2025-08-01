@@ -15,7 +15,10 @@
     systemd-boot.enable = true;
   };
 
-  networking.wirless.enable = true;
+  networking.wireless = {
+    enable = true;
+    userControlled.enable = true;
+  };
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
