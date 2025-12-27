@@ -9,15 +9,20 @@
   };
 
   outputs = { self, nixpkgs, ... } @ inputs:
-  {
-    nixosConfigurations.mistyfjord = nixpkgs.lib.nixosSystem {
+    let
       system = "x86_64-linux";
-      modules = [
-        inputs.disko.nixosModules.disko
-        inputs.nixos-hardware.nixosModules.framework-intel-core-ultra-series1
-        ./configuration.nix
-        ./hardware-configuration.nix
-      ];
+      pkgs = nixpkgs.legacyPackages.${system};
+    in
+    {
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt;
+      nixosConfigurations.mistyfjord = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          inputs.disko.nixosModules.disko
+          inputs.nixos-hardware.nixosModules.framework-intel-core-ultra-series1
+          ./configuration.nix
+          ./hardware-configuration.nix
+        ];
+      };
     };
-  };
 }
