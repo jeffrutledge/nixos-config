@@ -16,13 +16,11 @@
     in
     {
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt;
-      nixosConfigurations.mistyfjord = nixpkgs.lib.nixosSystem {
-        inherit system;
-        modules = [
+      nixosModules.default = {
+        imports = [
           inputs.disko.nixosModules.disko
-          inputs.nixos-hardware.nixosModules.framework-intel-core-ultra-series1
+          ./disko-config.nix
           ./configuration.nix
-          ./hardware-configuration.nix
         ];
       };
     };
