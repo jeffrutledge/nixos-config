@@ -26,7 +26,6 @@
   users.users.jrutledge = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    password = "12345";
     extraGroups = [
       "wheel"
     ];
