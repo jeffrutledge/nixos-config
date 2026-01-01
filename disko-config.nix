@@ -1,4 +1,5 @@
 {
+  disko.checkScripts = false;
   disko.devices = {
     disk = {
       main = {
