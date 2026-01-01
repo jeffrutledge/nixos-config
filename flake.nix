@@ -23,5 +23,14 @@
           ./configuration.nix
         ];
       };
+      nixosConfigurations.check-target = nixpkgs.lib.nixosSystem {
+        inherit system;
+        modules = [
+          self.nixosModules.default
+        ];
+      };
+
+      checks.x86_64-linux.config-validation =
+        self.nixosConfigurations.check-target.config.system.build.toplevel;
     };
 }
