@@ -30,7 +30,7 @@
         ];
       };
 
-      checks.x86_64-linux.config-validation =
+      checks.${system}.config-validation =
         self.nixosConfigurations.check-target.config.system.build.toplevel;
     };
 }
