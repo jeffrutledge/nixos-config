@@ -9,9 +9,8 @@
     systemd-boot.enable = true;
   };
 
-  networking.wireless = {
+  networking.networkmanager = {
     enable = true;
-    userControlled = true;
   };
 
   nix.settings.experimental-features = [
@@ -21,6 +20,15 @@
 
   services.userborn.enable = true;
 
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+      PermitRootLogin = "no";
+    };
+  };
+
   programs.zsh.enable = true;
 
   users.users.jrutledge = {
@@ -28,6 +36,7 @@
     shell = pkgs.zsh;
     extraGroups = [
       "wheel"
+      "networkmanager"
     ];
   };
 
