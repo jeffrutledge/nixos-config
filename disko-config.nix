@@ -1,5 +1,4 @@
 {
-  disko.tests.shellcheck = false;
   disko.devices = {
     disk = {
       main = {
