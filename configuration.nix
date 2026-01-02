@@ -9,8 +9,11 @@
     systemd-boot.enable = true;
   };
 
-  networking.networkmanager = {
-    enable = true;
+  networking = {
+    hostName = "misty";
+    networkmanager = {
+      enable = true;
+    };
   };
 
   nix.settings.experimental-features = [
