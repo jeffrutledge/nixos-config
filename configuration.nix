@@ -34,6 +34,13 @@
 
   programs.zsh.enable = true;
 
+  programs.neovim = {
+    enable = true;
+    defaultEditor = true;
+    viAlias = true;
+    vimAlias = true;
+  };
+
   users.users.jrutledge = {
     isNormalUser = true;
     shell = pkgs.zsh;
@@ -43,10 +50,12 @@
     ];
   };
 
-  environment.systemPackages = map lib.lowPrio [
-    pkgs.curl
-    pkgs.gitMinimal
-  ];
+  environment.systemPackages =
+    with pkgs;
+    map lib.lowPrio [
+      curl
+      gitMinimal
+    ];
 
   system.stateVersion = "25.11";
 }
