@@ -10,6 +10,10 @@
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    firefox-addons = {
+      url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -19,7 +23,6 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in
     {
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt;
       nixosModules.default = {
         imports = [
           inputs.disko.nixosModules.disko
@@ -30,11 +33,13 @@
             home-manager = {
               useGlobalPkgs = true;
               useUserPackages = true;
+              extraSpecialArgs = { inherit inputs; };
               users.jrutledge = import ./home;
             };
           }
         ];
       };
+      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt;
       nixosConfigurations.check-target = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
