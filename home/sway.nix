@@ -23,7 +23,6 @@ in
     swayidle
     dmenu # Ensure dmenu is available for legacy scripts
     i3blocks
-    xterm
   ];
 
   wayland.windowManager.sway = {
@@ -98,8 +97,7 @@ in
         "${mod}+${move_mod}+q" = "kill";
 
         # Launching
-        "${mod}+Return" = "exec ${pkgs.xterm}/bin/xterm";
-        "${mod}+Shift+Return" = "exec ${pkgs.xterm}/bin/uxterm";
+        "${mod}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
         "${mod}+apostrophe" = "exec emacsclient -nc";
         "${mod}+c" = "exec chromium";
         "${mod}+o" = "exec ${menu}";
