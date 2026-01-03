@@ -21,14 +21,26 @@
     "flakes"
   ];
 
-  services.userborn.enable = true;
+  services = {
+    userborn.enable = true;
 
-  services.openssh = {
-    enable = true;
-    settings = {
-      PasswordAuthentication = false;
-      KbdInteractiveAuthentication = false;
-      PermitRootLogin = "no";
+    openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+        KbdInteractiveAuthentication = false;
+        PermitRootLogin = "no";
+      };
+    };
+
+    kanata = {
+      enable = true;
+      keyboards.default = {
+        config = ''
+          (defsrc caps)
+          (deflayer default esc)
+        '';
+      };
     };
   };
 
