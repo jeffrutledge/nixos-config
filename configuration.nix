@@ -43,21 +43,22 @@
       };
     };
 
-    xserver = {
+    greetd = {
       enable = true;
-      displayManager = {
-        lightdm.enable = true;
-        defaultSession = "none+i3";
-      };
-      windowManager.i3 = {
-        enable = true;
-        extraPackages = with pkgs; [
-          dmenu
-          i3status
-          i3lock
-        ];
+      settings = {
+        default_session = {
+          command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --cmd sway";
+          user = "greeter";
+        };
       };
     };
+  };
+
+  security.polkit.enable = true;
+
+  programs.sway = {
+    enable = true;
+    wrapperFeatures.gtk = true;
   };
 
   programs.zsh.enable = true;

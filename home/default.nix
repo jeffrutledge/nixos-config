@@ -1,7 +1,7 @@
 { pkgs, ... }:
 {
   imports = [
-    ./i3.nix
+    ./sway.nix
     ./theme.nix
   ];
   home.stateVersion = "25.11";

@@ -9,12 +9,24 @@ let
   c = config.theme.colors;
   mod = "Mod1";
   move_mod = "Shift";
-  m_internal = "LVDS1";
-  m_external = "DP1";
+  # Wayland output names (adjust as needed, e.g. eDP-1, DP-1)
+  m_internal = "eDP-1";
+  m_external = "DP-1";
+  # Wayland native menu
+  menu = "${pkgs.wofi}/bin/wofi --show drun --prompt 'Search...'";
   dmenuOpts = "-i -fn DejaVuSansMono-10 -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
 in
 {
-  xsession.windowManager.i3 = {
+  home.packages = with pkgs; [
+    wofi
+    swaylock
+    swayidle
+    dmenu # Ensure dmenu is available for legacy scripts
+    i3blocks
+    xterm
+  ];
+
+  wayland.windowManager.sway = {
     enable = true;
     config = {
       modifier = mod;
@@ -75,20 +87,21 @@ in
         "${mod}+${move_mod}+q" = "kill";
 
         # Launching
-        "${mod}+Return" = "exec xterm -e \"cd `xcwd` && $SHELL\"";
-        "${mod}+Shift+Return" = "exec uxterm";
+        "${mod}+Return" = "exec ${pkgs.xterm}/bin/xterm";
+        "${mod}+Shift+Return" = "exec ${pkgs.xterm}/bin/uxterm";
         "${mod}+apostrophe" = "exec emacsclient -nc";
         "${mod}+c" = "exec chromium";
-        "${mod}+o" = "exec --no-startup-id i3-dmenu-desktop --dmenu='dmenu ${dmenuOpts}'";
-        "${mod}+slash" = "exec --no-startup-id passmenu ${dmenuOpts}";
-        "${mod}+b" = "exec --no-startup-id ~/bin/timewmenu ${dmenuOpts}";
-        "${mod}+Shift+b" = "exec --no-startup-id timew stop";
+        "${mod}+o" = "exec ${menu}";
+        # Fallback to dmenu for these if dmenu is installed (XWayland)
+        "${mod}+slash" = "exec passmenu ${dmenuOpts}";
+        "${mod}+b" = "exec ~/bin/timewmenu ${dmenuOpts}";
+        "${mod}+Shift+b" = "exec timew stop";
 
-        # Dunst
-        "${mod}+x" = "exec --no-startup-id dunstctl close";
-        "${mod}+${move_mod}+x" = "exec --no-startup-id dunstctl close-all";
-        "${mod}+z" = "exec --no-startup-id dunstctl context";
-        "${mod}+${move_mod}+z" = "exec --no-startup-id dunstctl history-pop";
+        # Dunst (works in Wayland)
+        "${mod}+x" = "exec ${pkgs.dunst}/bin/dunstctl close";
+        "${mod}+${move_mod}+x" = "exec ${pkgs.dunst}/bin/dunstctl close-all";
+        "${mod}+z" = "exec ${pkgs.dunst}/bin/dunstctl context";
+        "${mod}+${move_mod}+z" = "exec ${pkgs.dunst}/bin/dunstctl history-pop";
 
         # Focus / Movement (Vim-style)
         "${mod}+h" = "focus left";
@@ -252,20 +265,19 @@ in
 
       startup = [
         {
-          command = "dunst -config ~/.dunstrc";
+          command = "${pkgs.dunst}/bin/dunst -config ~/.dunstrc";
           always = true;
-          notification = false;
         }
       ];
 
       modes = {
         exit = {
-          "l" = "mode \"default\", exec --no-startup-id ~/bin/i3exit lock";
-          "e" = "mode \"default\", exec --no-startup-id ~/bin/i3exit logout";
-          "s" = "mode \"default\", exec --no-startup-id ~/bin/i3exit suspend";
-          "h" = "mode \"default\", exec --no-startup-id ~/bin/i3exit hibernate";
-          "r" = "mode \"default\", exec --no-startup-id ~/bin/i3exit reboot";
-          "p" = "mode \"default\", exec --no-startup-id ~/bin/i3exit poweroff";
+          "l" = "mode \"default\", exec ${pkgs.swaylock}/bin/swaylock";
+          "e" = "mode \"default\", exec swaymsg exit";
+          "s" = "mode \"default\", exec systemctl suspend";
+          "h" = "mode \"default\", exec systemctl hibernate";
+          "r" = "mode \"default\", exec systemctl reboot";
+          "p" = "mode \"default\", exec systemctl poweroff";
           "Return" = "mode \"default\"";
           "Escape" = "mode \"default\"";
         };
@@ -331,7 +343,8 @@ in
     };
 
     extraConfig = ''
-      new_window pixel 1
+      # Compatibility for some xwayland apps
+      xwayland enable
     '';
   };
 }
