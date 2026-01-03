@@ -25,9 +25,14 @@
           inputs.disko.nixosModules.disko
           ./disko-config.nix
           ./configuration.nix
-          ./theme.nix
           inputs.home-manager.nixosModules.home-manager
-          ./home.nix
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              users.jrutledge = import ./home;
+            };
+          }
         ];
       };
       nixosConfigurations.check-target = nixpkgs.lib.nixosSystem {
