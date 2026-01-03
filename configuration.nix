@@ -42,6 +42,22 @@
         '';
       };
     };
+
+    xserver = {
+      enable = true;
+      displayManager = {
+        lightdm.enable = true;
+        defaultSession = "none+i3";
+      };
+      windowManager.i3 = {
+        enable = true;
+        extraPackages = with pkgs; [
+          dmenu
+          i3status
+          i3lock
+        ];
+      };
+    };
   };
 
   programs.zsh.enable = true;
@@ -68,6 +84,17 @@
       curl
       gitMinimal
     ];
+
+  fonts = {
+    packages = with pkgs; [
+      dejavu_fonts
+    ];
+    fontconfig.defaultFonts = {
+      monospace = [ "DejaVu Sans Mono" ];
+      sansSerif = [ "DejaVu Sans" ];
+      serif = [ "DejaVu Serif" ];
+    };
+  };
 
   system.stateVersion = "25.11";
 }
