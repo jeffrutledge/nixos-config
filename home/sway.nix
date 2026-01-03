@@ -30,6 +30,11 @@ in
     enable = true;
     config = {
       modifier = mod;
+      output = {
+        "*" = {
+          scale = "1";
+        };
+      };
 
       fonts = {
         names = [ "DejaVu Sans Mono" ];
@@ -299,7 +304,7 @@ in
           statusCommand = "${pkgs.i3blocks}/bin/i3blocks";
           fonts = {
             names = [ "DejaVu Sans Mono" ];
-            size = 8.0;
+            size = 12.0;
           };
           extraConfig = ''
             strip_workspace_numbers yes
