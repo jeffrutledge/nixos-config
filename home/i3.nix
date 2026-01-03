@@ -327,9 +327,8 @@ in
           };
         }
       ];
+      window.hideEdgeBorders = "smart";
     };
-
-    window.hideEdgeBorders = "smart";
 
     extraConfig = ''
       new_window pixel 1
