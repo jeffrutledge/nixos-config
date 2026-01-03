@@ -25,6 +25,9 @@
           inputs.disko.nixosModules.disko
           ./disko-config.nix
           ./configuration.nix
+          ./theme.nix
+          inputs.home-manager.nixosModules.home-manager
+          ./home.nix
         ];
       };
       nixosConfigurations.check-target = nixpkgs.lib.nixosSystem {
