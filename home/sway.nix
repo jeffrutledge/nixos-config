@@ -44,6 +44,12 @@ in
       window.border = 1;
       floating.modifier = mod;
 
+      input = {
+        "type:touchpad" = {
+          tap = "enabled";
+        };
+      };
+
       # Appearance / Colors using the theme module
       colors = {
         focused = {
