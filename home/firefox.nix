@@ -80,6 +80,11 @@ in
           visibility: collapse !important;
         }
 
+        /* Hide the Sidebar */
+        #sidebar-box, #sidebar-header {
+          visibility: collapse !important;
+        }
+
         /* Remove 'Back' button when it's disabled */
         #back-button[disabled="true"] { 
           display: none !important; 
