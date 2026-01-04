@@ -84,8 +84,11 @@ in
         }
 
         /* Hide the Sidebar */
-        #sidebar-box, #sidebar-header {
-          visibility: collapse !important;
+        #sidebar-box[hidden="true"] {
+          display: none !important;
+        }
+        #sidebar-header {
+          display: none !important;
         }
 
         /* Remove 'Back' button when it's disabled */
