@@ -9,8 +9,10 @@ in
     font = "DejaVu Sans Mono 10";
     extraConfig = {
       modi = "drun";
-      kb-row-up = "Control+k";
-      kb-row-down = "Control+j";
+      kb-row-up = "Up,Control+k";
+      kb-row-down = "Down,Control+j";
+      kb-remove-to-eol = "";
+      kb-accept-entry = "Control+m,Return,KP_Enter";
     };
     theme = {
       "*" = {
