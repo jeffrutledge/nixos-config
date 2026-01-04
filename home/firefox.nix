@@ -76,18 +76,9 @@ in
           color: ${colors.base1} !important;
         }
 
-        /* Auto-hide the Bookmarks Bar (Shows on hover) */
+        /* Always hide the Bookmarks Bar */
         #PersonalToolbar {
-          padding: 0px !important;
-          height: 2px !important;
-          opacity: 0 !important;
-          transition: all 0.2s ease-in-out !important;
-          background-color: ${colors.base02} !important;
-          color: ${colors.base0} !important;
-        }
-        #PersonalToolbar:hover {
-          height: auto !important;
-          opacity: 1 !important;
+          visibility: collapse !important;
         }
 
         /* Remove 'Back' button when it's disabled */
