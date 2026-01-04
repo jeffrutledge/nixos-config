@@ -19,7 +19,7 @@ in
       extensions.packages = with inputs.firefox-addons.packages.${pkgs.stdenv.hostPlatform.system}; [
         ublock-origin
         darkreader
-        sidebery
+        tridactyl
       ];
 
       settings = {
@@ -38,14 +38,6 @@ in
         # --- COSMETIC ---
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable UI changes with userChrome.css
         "browser.tabs.firefox-view" = false;
-
-        # --- SIDEBERY OPTIMIZATIONS ---
-        # Allows Sidebery to control hidden tabs (important for panels)
-        "extensions.sidebery.control-hidden-tabs" = true;
-
-        # Hide the sidebar header ("Sidebery" text at the top of the sidebar)
-        "sidebar.revamp" = true;
-        "sidebar.verticalTabs" = true;
       };
 
       userChrome = ''
