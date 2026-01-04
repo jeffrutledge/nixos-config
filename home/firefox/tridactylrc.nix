@@ -1,18 +1,17 @@
 { colors }:
 ''
-  :set smoothscroll true
+  set smoothscroll true
 
   " Tridactyl Solarized Theme
-  :colors dark
-  :set bg ${colors.base03}
-  :set fg ${colors.base0}
+  set bg ${colors.base03}
+  set fg ${colors.base0}
 
   " Completion navigation bindings
-  :bind --mode=ex <C-j> ex.next_completion
-  :bind --mode=ex <C-k> ex.prev_completion
+  bind --mode=ex <C-j> ex.next_completion
+  bind --mode=ex <C-k> ex.prev_completion
 
   " Custom CSS for Tridactyl UI elements
-  :set customcss :root { \
+  set customcss :root { \
     --tridactyl-bg: ${colors.base03}; \
     --tridactyl-fg: ${colors.base0}; \
     --tridactyl-url-fg: ${colors.blue}; \
