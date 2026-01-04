@@ -5,6 +5,7 @@ pkgs.writeText "startpage.html" ''
   <html>
   <head>
     <meta charset="utf-8">
+    <title>Startpage</title>
     <style>
       body {
         background-color: ${colors.base03};
