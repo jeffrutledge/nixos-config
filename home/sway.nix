@@ -92,8 +92,7 @@ in
       # Keybindings
       keybindings = lib.mkOptionDefault {
         # Basics
-        "${mod}+Shift+c" = "reload";
-        "${mod}+Shift+r" = "restart";
+        "${mod}+Shift+r" = "reload";
         "${mod}+${move_mod}+q" = "kill";
 
         # Launching
