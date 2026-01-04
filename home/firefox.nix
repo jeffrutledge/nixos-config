@@ -38,6 +38,11 @@ in
         # --- COSMETIC ---
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable UI changes with userChrome.css
         "browser.tabs.firefox-view" = false;
+        "browser.newtabpage.enabled" = false;
+        "browser.startup.homepage" = "about:blank";
+
+        # --- TRIDACTYL ---
+        "extensions.tridactyl.newtab" = "true";
       };
 
       userChrome = ''
