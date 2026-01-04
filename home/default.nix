@@ -3,6 +3,7 @@
   imports = [
     ./sway.nix
     ./git.nix
+    ./wofi.nix
     ./theme.nix
     ./firefox.nix
     ./alacritty.nix

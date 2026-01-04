@@ -18,7 +18,6 @@ let
 in
 {
   home.packages = with pkgs; [
-    wofi
     swaylock
     swayidle
     dmenu # Ensure dmenu is available for legacy scripts
