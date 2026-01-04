@@ -106,6 +106,9 @@ in
       '';
 
     };
+    nativeMessagingHosts = [
+      pkgs.tridactyl-native
+    ];
   };
 
   xdg.mimeApps = {
