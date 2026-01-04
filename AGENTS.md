@@ -6,6 +6,7 @@ Make edits to this AGENTS.md file when:
 - something took a lot of time to work through: write down hints for next time
 
 - **Avoid Duplicate Imports**: If a package or script is imported and used directly in a specific module (e.g., `sway.nix`), do not also add it to `packages.nix` unless it is explicitly needed in the global environment independently of that module.
+- **Package Organization**: When a package requires custom scripts or auxiliary files (like `alacritty-cwd-launch`), create a directory for the package (e.g., `home/alacritty/`), name the main configuration `default.nix`, and place the auxiliary files in that same directory.
 
 # Style
 - Do your best to modularize the configuration into different files
