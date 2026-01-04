@@ -2,7 +2,9 @@
 {
   programs.git = {
     enable = true;
-    userName = "Jeffrey Rutledge";
-    userEmail = "misc@jeffrut.com";
+    settings.user = {
+      name = "Jeffrey Rutledge";
+      email = "misc@jeffrut.com";
+    };
   };
 }
