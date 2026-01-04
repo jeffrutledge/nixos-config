@@ -13,7 +13,7 @@ let
   m_internal = "eDP-1";
   m_external = "DP-1";
   # Wayland native menu
-  menu = "${pkgs.wofi}/bin/wofi --show drun --prompt 'Search...'";
+  menu = "${pkgs.rofi}/bin/rofi -show drun";
   dmenuOpts = "-i -fn DejaVuSansMono-10 -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
 in
 {
