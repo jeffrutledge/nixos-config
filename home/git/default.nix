@@ -1,5 +1,6 @@
 { pkgs, ... }:
 {
+  imports = [ ./aliases.nix ];
   programs.git = {
     enable = true;
     settings.user = {

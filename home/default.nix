@@ -2,7 +2,7 @@
 {
   imports = [
     ./sway.nix
-    ./git.nix
+    ./git
     ./rofi.nix
     ./theme.nix
     ./firefox.nix
