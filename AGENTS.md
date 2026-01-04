@@ -1,7 +1,8 @@
 # Style
-- do your best to modularize the config into different files
+- Do your best to modularize the config into different files
+- Refer to binaries in the nix way. For example `${pkgs.firefox}/bin/firefox` instead of `firefox`.
 
 # Post change hooks
-- git add any new files
-- test `nix flake check` passes
-- format with `nix fmt **/*.nix`
+1. Add newly created files with `git add`
+2. Test `nix flake check` passes
+3. Format with `nix fmt **/*.nix`
