@@ -6,6 +6,7 @@
 }:
 let
   colors = config.theme.colors;
+  myStartpage = pkgs.writeText "startpage.html" (builtins.readFile ./firefox/startpage.html);
 in
 {
   programs.firefox = {
@@ -38,8 +39,9 @@ in
         # --- COSMETIC ---
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable UI changes with userChrome.css
         "browser.tabs.firefox-view" = false;
-        "browser.newtabpage.enabled" = false;
-        "browser.startup.homepage" = "about:blank";
+        "browser.startup.homepage" = "file://${myStartpage}";
+        "browser.newtabpage.enabled" = true;
+        "browser.newtab.url" = "file://${myStartpage}";
 
         # --- TRIDACTYL ---
         "extensions.tridactyl.newtab" = "true";
