@@ -15,6 +15,8 @@ let
   # Wayland native menu
   menu = "${pkgs.rofi}/bin/rofi -show drun";
   dmenuOpts = "-i -fn DejaVuSansMono-10 -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
+
+  alacrittyCwdLaunch = import ./alacritty-cwd-launch.nix { inherit pkgs; };
 in
 {
   home.packages = with pkgs; [
@@ -95,7 +97,7 @@ in
         "${mod}+${move_mod}+q" = "kill";
 
         # Launching
-        "${mod}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
+        "${mod}+Return" = "exec ${alacrittyCwdLaunch}/bin/alacritty-cwd-launch";
         "${mod}+apostrophe" = "exec emacsclient -nc";
         "${mod}+b" = "exec ${pkgs.firefox}/bin/firefox";
         "${mod}+o" = "exec ${menu}";
