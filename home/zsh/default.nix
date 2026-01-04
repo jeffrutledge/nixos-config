@@ -5,8 +5,8 @@
     defaultKeymap = "viins";
 
     history = {
-      size = 10000;
-      save = 10000;
+      size = 1000000;
+      save = 1000000;
       path = "$HOME/.zsh_history";
       share = true;
       extended = true;
