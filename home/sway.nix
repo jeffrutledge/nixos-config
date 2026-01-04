@@ -99,14 +99,11 @@ in
         # Launching
         "${mod}+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
         "${mod}+apostrophe" = "exec emacsclient -nc";
-        "${mod}+c" = "exec chromium";
+        "${mod}+b" = "exec ${pkgs.firefox}/bin/firefox";
         "${mod}+o" = "exec ${menu}";
-        # Fallback to dmenu for these if dmenu is installed (XWayland)
         "${mod}+slash" = "exec passmenu ${dmenuOpts}";
-        "${mod}+b" = "exec ~/bin/timewmenu ${dmenuOpts}";
-        "${mod}+Shift+b" = "exec timew stop";
 
-        # Dunst (works in Wayland)
+        # Dunst
         "${mod}+x" = "exec ${pkgs.dunst}/bin/dunstctl close";
         "${mod}+${move_mod}+x" = "exec ${pkgs.dunst}/bin/dunstctl close-all";
         "${mod}+z" = "exec ${pkgs.dunst}/bin/dunstctl context";
