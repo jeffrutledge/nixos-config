@@ -1,4 +1,12 @@
-{ pkgs, inputs, ... }:
+{
+  pkgs,
+  inputs,
+  config,
+  ...
+}:
+let
+  colors = config.theme.colors;
+in
 {
   programs.firefox = {
     enable = true;
@@ -52,9 +60,20 @@
           margin-bottom: 0px !important;
           padding-top: 2px !important;
           padding-bottom: 2px !important;
-          background-color: transparent !important;
+          background-color: ${colors.base03} !important;
           border: none !important;
           box-shadow: none !important;
+          color: ${colors.base0} !important;
+        }
+
+        /* URL Bar colors */
+        #urlbar-background {
+          background-color: ${colors.base02} !important;
+          border: 1px solid ${colors.base01} !important;
+        }
+
+        #urlbar-input {
+          color: ${colors.base1} !important;
         }
 
         /* Auto-hide the Bookmarks Bar (Shows on hover) */
@@ -63,6 +82,8 @@
           height: 2px !important;
           opacity: 0 !important;
           transition: all 0.2s ease-in-out !important;
+          background-color: ${colors.base02} !important;
+          color: ${colors.base0} !important;
         }
         #PersonalToolbar:hover {
           height: auto !important;
@@ -82,6 +103,7 @@
         /* Remove the "Grey line" between the URL bar and the webpage */
         #navigator-toolbox {
           border-bottom: none !important;
+          background-color: ${colors.base03} !important;
         }
       '';
 
