@@ -1,5 +1,7 @@
+- Do not make extra changes! Only make the changes requested!
+
 # Style
-- Do your best to modularize the config into different files
+- Do your best to modularize the configuration into different files
 - Refer to binaries in the nix way. For example `${pkgs.firefox}/bin/firefox` instead of `firefox`.
 
 # Post change hooks
