@@ -119,5 +119,8 @@ in
     };
   };
 
-  home.packages = [ pkgs.xdg-utils ];
+  home.packages = [
+    pkgs.xdg-utils
+    pkgs.tridactyl-native
+  ];
 }
