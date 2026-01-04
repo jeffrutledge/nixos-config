@@ -98,6 +98,7 @@ in
 
         # Launching
         "${mod}+Return" = "exec ${alacrittyCwdLaunch}/bin/alacritty-cwd-launch";
+        "${mod}+Shift+Return" = "exec ${pkgs.alacritty}/bin/alacritty";
         "${mod}+apostrophe" = "exec emacsclient -nc";
         "${mod}+b" = "exec ${pkgs.firefox}/bin/firefox";
         "${mod}+o" = "exec ${menu}";
