@@ -8,6 +8,7 @@ Make edits to this AGENTS.md file when:
 # Style
 - Do your best to modularize the configuration into different files
 - Refer to binaries in the nix way. For example `${pkgs.firefox}/bin/firefox` instead of `firefox`.
+- For custom scripts or packages, always use the interpolated path `${pkg}/bin/binary` in configurations rather than relying on `exec binary` and the PATH.
 
 # Post change hooks
 1. Add newly created untracked files with `git add NEWLY_CREATED_FILE`
