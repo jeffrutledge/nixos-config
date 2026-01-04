@@ -8,8 +8,8 @@
   :set fg ${colors.base0}
 
   " Completion navigation bindings
-  :bind --mode=ex <C-j> completions-next
-  :bind --mode=ex <C-k> completions-prev
+  :bind --mode=ex <C-j> ex.next_completion
+  :bind --mode=ex <C-k> ex.prev_completion
 
   " Custom CSS for Tridactyl UI elements
   :set customcss :root { \
