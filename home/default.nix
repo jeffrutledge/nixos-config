@@ -6,7 +6,7 @@
     ./rofi.nix
     ./theme.nix
     ./firefox.nix
-    ./alacritty.nix
+    ./alacritty
     ./packages.nix
   ];
   home.stateVersion = "25.11";
