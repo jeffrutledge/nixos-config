@@ -30,7 +30,6 @@
       # Options
       setopt NO_BG_NICE
       setopt NO_LIST_BEEP
-      setopt CORRECT
       setopt IGNORE_EOF
       setopt PROMPT_SUBST
       setopt LOCAL_OPTIONS
