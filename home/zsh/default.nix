@@ -14,6 +14,7 @@
 
     sessionVariables = {
       EDITOR = "nvim";
+      VISUAL = "nvim";
       MAKEFLAGS = "-j";
       CLICOLOR = "true";
     };
