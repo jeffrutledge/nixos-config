@@ -5,6 +5,10 @@ in
 {
   programs.wofi = {
     enable = true;
+    settings = {
+      key_up = "Ctrl-k";
+      key_down = "Ctrl-j";
+    };
     style = ''
       window {
         background-color: ${c.base02};
