@@ -9,7 +9,6 @@
     ./alacritty
     ./zsh
     ./starship.nix
-    ./fonts.nix
     ./packages.nix
   ];
   home.stateVersion = "25.11";

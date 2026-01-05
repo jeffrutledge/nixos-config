@@ -89,9 +89,10 @@
   fonts = {
     packages = with pkgs; [
       dejavu_fonts
+      nerd-fonts.dejavu-sans-mono
     ];
     fontconfig.defaultFonts = {
-      monospace = [ "DejaVu Sans Mono" ];
+      monospace = [ "DejaVuSansM Nerd Font" ];
       sansSerif = [ "DejaVu Sans" ];
       serif = [ "DejaVu Serif" ];
     };
