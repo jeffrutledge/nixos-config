@@ -2,5 +2,7 @@
 {
   home.packages = with pkgs; [
     gemini-cli
+    bottom
+    fd
   ];
 }
