@@ -17,6 +17,7 @@
       VISUAL = "nvim";
       MAKEFLAGS = "-j";
       CLICOLOR = "true";
+      KEYTIMEOUT = "10";
     };
 
     syntaxHighlighting.enable = true;
