@@ -27,6 +27,20 @@ in
     i3blocks
   ];
 
+  services.swayidle = {
+    enable = true;
+    events = {
+      before-sleep = "${pkgs.swaylock}/bin/swaylock -fF";
+      lock = "${pkgs.swaylock}/bin/swaylock -fF";
+    };
+    timeouts = [
+      {
+        timeout = 300; # 5 minutes of inactivity
+        command = "systemctl suspend-then-hibernate";
+      }
+    ];
+  };
+
   wayland.windowManager.sway = {
     enable = true;
     config = {
