@@ -4,5 +4,8 @@
     gemini-cli
     bottom
     fd
+    tree
+    ripgrep
+    wl-clipboard
   ];
 }
