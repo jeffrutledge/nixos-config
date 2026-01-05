@@ -49,6 +49,7 @@ in
         "browser.startup.homepage" = "file://${startpage}";
         "browser.newtabpage.enabled" = true;
         "browser.newtab.url" = "file://${startpage}";
+        "ui.key.menuAccessKeyFocuses" = false;
 
         # --- TRIDACTYL ---
         "extensions.tridactyl.newtab" = "true";
