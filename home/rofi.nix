@@ -6,7 +6,7 @@ in
 {
   programs.rofi = {
     enable = true;
-    font = "DejaVu Sans Mono 10";
+    font = "DejaVuSansM Nerd Font 10";
     extraConfig = {
       modi = "drun";
       kb-row-up = "Up,Control+k";

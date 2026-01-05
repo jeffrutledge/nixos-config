@@ -14,7 +14,7 @@ let
   m_external = "DP-1";
   # Wayland native menu
   menu = "${pkgs.rofi}/bin/rofi -show drun";
-  dmenuOpts = "-i -fn DejaVuSansMono-10 -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
+  dmenuOpts = "-i -fn 'DejaVuSansM Nerd Font-10' -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
 
   alacrittyCwdLaunch = import ./alacritty/alacritty-cwd-launch.nix { inherit pkgs; };
 in
@@ -37,8 +37,8 @@ in
       };
 
       fonts = {
-        names = [ "DejaVu Sans Mono" ];
-        size = 8.0;
+        names = [ "DejaVuSansM Nerd Font" ];
+        size = 10.0;
       };
 
       window.border = 1;
@@ -305,8 +305,8 @@ in
           position = "bottom";
           statusCommand = "${pkgs.i3blocks}/bin/i3blocks";
           fonts = {
-            names = [ "DejaVu Sans Mono" ];
-            size = 12.0;
+            names = [ "DejaVuSansM Nerd Font" ];
+            size = 10.0;
           };
           extraConfig = ''
             strip_workspace_numbers yes

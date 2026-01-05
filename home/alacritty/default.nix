@@ -15,9 +15,9 @@ in
       };
 
       font = {
-        size = 12.0;
+        size = 10.0;
         normal = {
-          family = "DejaVu Sans Mono";
+          family = "DejaVuSansM Nerd Font";
           style = "Regular";
         };
       };
