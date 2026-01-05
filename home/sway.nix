@@ -48,6 +48,10 @@ in
       input = {
         "type:touchpad" = {
           tap = "enabled";
+          natural_scroll = "enabled";
+        };
+        "type:pointer" = {
+          pointer_accel = "1.0";
         };
       };
 
