@@ -38,6 +38,10 @@ in
         "browser.shell.checkDefaultBrowser" = false;
         "dom.security.https_only_mode" = true;
         "privacy.trackingprotection.enabled" = true;
+        "signon.rememberSignons" = false;
+        "signon.autofillForms" = false; # Optional: also disables address/credit card autofill
+        "extensions.formautofill.addresses.enabled" = false;
+        "extensions.formautofill.creditCards.enabled" = false;
 
         # --- COSMETIC ---
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable UI changes with userChrome.css
