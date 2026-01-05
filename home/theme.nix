@@ -67,4 +67,15 @@
       default = "#859900";
     };
   };
+
+  options.theme.font = {
+    family = lib.mkOption {
+      type = lib.types.str;
+      default = "DejaVuSansM Nerd Font";
+    };
+    size = lib.mkOption {
+      type = lib.types.float;
+      default = 11.0;
+    };
+  };
 }

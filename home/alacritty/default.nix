@@ -2,6 +2,7 @@
 
 let
   c = config.theme.colors;
+  f = config.theme.font;
 in
 {
   programs.alacritty = {
@@ -15,12 +16,13 @@ in
       };
 
       font = {
-        size = 10.0;
+        size = f.size;
         normal = {
-          family = "DejaVuSansM Nerd Font";
+          family = f.family;
           style = "Regular";
         };
       };
+
 
       colors = {
         primary = {

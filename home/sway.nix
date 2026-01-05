@@ -7,6 +7,7 @@
 
 let
   c = config.theme.colors;
+  f = config.theme.font;
   mod = "Mod1";
   move_mod = "Shift";
   # Wayland output names (adjust as needed, e.g. eDP-1, DP-1)
@@ -14,7 +15,7 @@ let
   m_external = "DP-1";
   # Wayland native menu
   menu = "${pkgs.rofi}/bin/rofi -show drun";
-  dmenuOpts = "-i -fn 'DejaVuSansM Nerd Font-10' -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
+  dmenuOpts = "-i -fn '${f.family}-${toString f.size}' -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
 
   alacrittyCwdLaunch = import ./alacritty/alacritty-cwd-launch.nix { inherit pkgs; };
 in
@@ -37,8 +38,8 @@ in
       };
 
       fonts = {
-        names = [ "DejaVuSansM Nerd Font" ];
-        size = 10.0;
+        names = [ f.family ];
+        size = f.size;
       };
 
       window.border = 1;
@@ -305,8 +306,8 @@ in
           position = "bottom";
           statusCommand = "${pkgs.i3blocks}/bin/i3blocks";
           fonts = {
-            names = [ "DejaVuSansM Nerd Font" ];
-            size = 10.0;
+            names = [ f.family ];
+            size = f.size;
           };
           extraConfig = ''
             strip_workspace_numbers yes

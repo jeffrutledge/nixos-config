@@ -1,12 +1,13 @@
 { pkgs, config, ... }:
 let
   c = config.theme.colors;
+  f = config.theme.font;
   inherit (config.lib.formats.rasi) mkLiteral;
 in
 {
   programs.rofi = {
     enable = true;
-    font = "DejaVuSansM Nerd Font 10";
+    font = "${f.family} ${toString f.size}";
     extraConfig = {
       modi = "drun";
       kb-row-up = "Up,Control+k";
