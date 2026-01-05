@@ -23,7 +23,6 @@ in
         };
       };
 
-
       colors = {
         primary = {
           background = c.base03;
