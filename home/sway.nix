@@ -298,7 +298,7 @@ in
         exit = {
           "l" = "mode \"default\", exec ${pkgs.swaylock}/bin/swaylock";
           "e" = "mode \"default\", exec swaymsg exit";
-          "s" = "mode \"default\", exec systemctl suspend";
+          "s" = "mode \"default\", exec systemctl suspend-then-hibernate";
           "h" = "mode \"default\", exec systemctl hibernate";
           "r" = "mode \"default\", exec systemctl reboot";
           "p" = "mode \"default\", exec systemctl poweroff";
