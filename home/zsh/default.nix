@@ -20,6 +20,10 @@
       KEYTIMEOUT = "10";
     };
 
+    shellAliases = {
+      e = "nvim";
+    };
+
     syntaxHighlighting.enable = true;
 
     initContent = ''
