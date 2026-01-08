@@ -88,14 +88,6 @@ in
           visibility: collapse !important;
         }
 
-        /* Hide the Sidebar */
-        #sidebar-box[hidden="true"] {
-          display: none !important;
-        }
-        #sidebar-header {
-          display: none !important;
-        }
-
         /* Remove 'Back' button when it's disabled */
         #back-button[disabled="true"] { 
           display: none !important; 
