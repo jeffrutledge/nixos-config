@@ -161,6 +161,31 @@ in
         "${mod}+t" = "workspace 91:todo";
         "${mod}+period" = "workspace 92:music";
 
+        # Move to workspace
+        "${mod}+${move_mod}+1" = "move container to workspace 1:1";
+        "${mod}+${move_mod}+2" = "move container to workspace 3:2";
+        "${mod}+${move_mod}+3" = "move container to workspace 5:3";
+        "${mod}+${move_mod}+4" = "move container to workspace 7:4";
+        "${mod}+${move_mod}+5" = "move container to workspace 9:5";
+        "${mod}+${move_mod}+6" = "move container to workspace 11:6";
+        "${mod}+${move_mod}+7" = "move container to workspace 13:7";
+        "${mod}+${move_mod}+8" = "move container to workspace 15:8";
+        "${mod}+${move_mod}+9" = "move container to workspace 17:9";
+        "${mod}+${move_mod}+0" = "move container to workspace 19:10";
+        "${mod}+${move_mod}+F1" = "move container to workspace 2:f1";
+        "${mod}+${move_mod}+F2" = "move container to workspace 4:f2";
+        "${mod}+${move_mod}+F3" = "move container to workspace 6:f3";
+        "${mod}+${move_mod}+F4" = "move container to workspace 8:f4";
+        "${mod}+${move_mod}+F5" = "move container to workspace 10:f5";
+        "${mod}+${move_mod}+F6" = "move container to workspace 12:f6";
+        "${mod}+${move_mod}+F7" = "move container to workspace 14:f7";
+        "${mod}+${move_mod}+F8" = "move container to workspace 16:f8";
+        "${mod}+${move_mod}+F9" = "move container to workspace 18:f9";
+        "${mod}+${move_mod}+F10" = "move container to workspace 20:f10";
+        "${mod}+${move_mod}+m" = "move container to workspace 90:msgs";
+        "${mod}+${move_mod}+t" = "move container to workspace 91:todo";
+        "${mod}+${move_mod}+greater" = "move container to workspace 92:music";
+
         # Layouts
         "${mod}+semicolon" = "split h";
         "${mod}+v" = "split v";
