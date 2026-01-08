@@ -75,7 +75,7 @@
     };
     size = lib.mkOption {
       type = lib.types.float;
-      default = 11.0;
+      default = 12.0;
     };
   };
 }
