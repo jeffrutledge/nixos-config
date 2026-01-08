@@ -10,20 +10,17 @@ let
   f = config.theme.font;
   mod = "Mod1";
   move_mod = "Shift";
-  # Wayland output names (adjust as needed, e.g. eDP-1, DP-1)
   m_internal = "eDP-1";
   m_external = "DP-1";
-  # Wayland native menu
   menu = "${pkgs.rofi}/bin/rofi -show drun";
   dmenuOpts = "-i -fn '${f.family}-${toString f.size}' -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
-
   alacrittyCwdLaunch = import ./alacritty/alacritty-cwd-launch.nix { inherit pkgs; };
 in
 {
   home.packages = with pkgs; [
     swaylock
     swayidle
-    dmenu # Ensure dmenu is available for legacy scripts
+    dmenu
     i3blocks
   ];
 
