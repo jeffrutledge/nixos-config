@@ -1,4 +1,5 @@
 - Do not make extra changes! Only make the changes requested!
+- Do not commit changes without asking!
 
 # Memory 
 Make edits to this AGENTS.md file when:
@@ -14,6 +15,6 @@ Make edits to this AGENTS.md file when:
 - For custom scripts or packages, always use the interpolated path `${pkg}/bin/binary` in configurations rather than relying on `exec binary` and the PATH.
 
 # Post change hooks
-1. Add newly created untracked files with `git add NEWLY_CREATED_FILE`
+1. Add newly created untracked files with `git add -N NEWLY_CREATED_FILE`
 2. Test `nix flake check` passes
 3. Format with `nix fmt **/*.nix`
