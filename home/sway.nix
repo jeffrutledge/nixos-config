@@ -15,6 +15,11 @@ let
   menu = "${pkgs.rofi}/bin/rofi -show drun";
   dmenuOpts = "-i -fn '${f.family}-${toString f.size}' -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
   alacrittyCwdLaunch = import ./alacritty/alacritty-cwd-launch.nix { inherit pkgs; };
+  externalDisplay = import ./sway/external-display.nix {
+    inherit pkgs;
+    internal = m_internal;
+    external = m_external;
+  };
 in
 {
   home.packages = with pkgs; [
@@ -324,6 +329,13 @@ in
           "h" = "mode \"default\", exec systemctl hibernate";
           "r" = "mode \"default\", exec systemctl reboot";
           "p" = "mode \"default\", exec systemctl poweroff";
+          "Return" = "mode \"default\"";
+          "Escape" = "mode \"default\"";
+        };
+        display = {
+          "o" = "mode \"default\", exec ${externalDisplay}/bin/external-display off";
+          "a" = "mode \"default\", exec ${externalDisplay}/bin/external-display on";
+          "r" = "mode \"default\", exec ${externalDisplay}/bin/external-display right";
           "Return" = "mode \"default\"";
           "Escape" = "mode \"default\"";
         };
