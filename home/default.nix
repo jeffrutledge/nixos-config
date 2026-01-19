@@ -10,6 +10,7 @@
     ./zsh
     ./starship.nix
     ./packages.nix
+    ./waybar
   ];
   home.stateVersion = "25.11";
 }

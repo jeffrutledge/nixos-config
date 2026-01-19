@@ -1,4 +1,8 @@
-{ pkgs, internal, external }:
+{
+  pkgs,
+  internal,
+  external,
+}:
 
 let
   swaymsg = "${pkgs.sway}/bin/swaymsg";

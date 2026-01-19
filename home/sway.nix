@@ -26,7 +26,6 @@ in
     swaylock
     swayidle
     dmenu
-    i3blocks
   ];
 
   services.swayidle = {
@@ -319,6 +318,10 @@ in
           command = "${pkgs.dunst}/bin/dunst -config ~/.dunstrc";
           always = true;
         }
+        {
+          command = "systemctl --user restart waybar";
+          always = true;
+        }
       ];
 
       modes = {
@@ -350,53 +353,7 @@ in
           "Escape" = "mode \"default\"";
         };
       };
-
-      bars = [
-        {
-          position = "bottom";
-          statusCommand = "${pkgs.i3blocks}/bin/i3blocks";
-          fonts = {
-            names = [ f.family ];
-            size = f.size;
-          };
-          extraConfig = ''
-            strip_workspace_numbers yes
-            tray_output none
-            bindsym button4 nop
-            bindsym button5 nop
-          '';
-          colors = {
-            background = c.base03;
-            statusline = c.base1;
-            separator = c.base1;
-            focusedWorkspace = {
-              border = c.blue;
-              background = c.base02;
-              text = c.base1;
-            };
-            activeWorkspace = {
-              border = c.violet;
-              background = c.base02;
-              text = c.base1;
-            };
-            inactiveWorkspace = {
-              border = c.base03;
-              background = c.base03;
-              text = c.base01;
-            };
-            urgentWorkspace = {
-              border = c.red;
-              background = c.base3;
-              text = c.base01;
-            };
-            bindingMode = {
-              border = c.green;
-              background = c.base02;
-              text = c.base1;
-            };
-          };
-        }
-      ];
+      bars = [ ];
       window.hideEdgeBorders = "smart";
     };
 
