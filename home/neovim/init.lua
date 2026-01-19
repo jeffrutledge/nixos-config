@@ -67,8 +67,10 @@ lint.linters_by_ft = {
 	lua = { "luacheck" },
 }
 
-vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave" }, {
+vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "BufEnter" }, {
 	callback = function()
-		lint.try_lint()
+		vim.defer_fn(function()
+			lint.try_lint()
+		end, 100)
 	end,
 })
