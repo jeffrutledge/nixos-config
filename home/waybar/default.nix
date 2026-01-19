@@ -100,9 +100,10 @@ in
             warning = 30;
             critical = 15;
           };
-          format = "{icon} {capacity}%";
-          format-charging = " {capacity}%";
-          format-plugged = " {capacity}%";
+          format = "{icon} {capacity}% {time}";
+          format-charging = " {capacity}% {time}";
+          format-plugged = " {capacity}% {time}";
+	  format-time = "{H}h{M}";
           format-icons = [
             ""
             ""
@@ -111,6 +112,7 @@ in
             ""
           ];
           interval = 30;
+          tooltip-format = "{power:.2f} W {health}/100 H";
         };
 
         "clock" = {
