@@ -6,6 +6,7 @@ let
   metarScript = import ./scripts/metar.nix { inherit pkgs; };
   duplicatiScript = import ./scripts/duplicati.nix { inherit pkgs; };
   timewScript = import ./scripts/timew.nix { inherit pkgs; };
+  wifiStatusScript = import ./scripts/wifi-status.nix { inherit pkgs; };
 in
 {
   programs.waybar = {
@@ -76,6 +77,7 @@ in
           format-alt = "{ifname}: {essid} {ipaddr}/{cidr}";
           tooltip-format = "{ifname}: {essid} {ipaddr}/{cidr}";
           interval = 5;
+          on-scroll-up = "${wifiStatusScript}/bin/wifi-status";
         };
 
         "pulseaudio" = {
