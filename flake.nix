@@ -40,6 +40,18 @@
         ];
       };
       formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt;
+      devShells.${system}.default = pkgs.mkShell {
+        packages = [
+          (pkgs.callPackage ./home/waybar/scripts/metar.nix { })
+          (pkgs.callPackage ./home/waybar/scripts/duplicati.nix { })
+          (pkgs.callPackage ./home/waybar/scripts/timew.nix { })
+          (pkgs.callPackage ./home/waybar/scripts/wifi-status.nix { })
+          (pkgs.callPackage ./home/sway/external-display.nix {
+            internal = "eDP-1";
+            external = "DP-1";
+          })
+        ];
+      };
       nixosConfigurations.check-target = nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [
