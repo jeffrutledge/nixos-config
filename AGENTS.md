@@ -15,7 +15,11 @@ Make edits to this AGENTS.md file when:
 - Prefer `writeShellApplication` over `writeShellScriptBin`
 - For custom scripts or packages, always use the interpolated path `${pkg}/bin/binary` in configurations rather than relying on `exec binary` and the PATH.
 
+## Neovim
+- use ./home/neovim/after/ftplugin for file type specific settings like indents
+- put each package settings into its own lua file
+
 # Post change hooks
 1. Add newly created untracked files with `git add -N NEWLY_CREATED_FILE`
 2. Test `nix flake check` passes. Ignore warnings about dirty Git tree
-3. Format with `nix fmt **/*.nix`
+3. Format with `nix fmt`
