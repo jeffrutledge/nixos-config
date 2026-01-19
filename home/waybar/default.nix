@@ -36,6 +36,10 @@ in
         "sway/workspaces" = {
           disable-scroll = true;
           all-outputs = true;
+          format = "{name}";
+          rewrite = {
+            "^\\d+:(.*)$" = "$1";
+          };
         };
 
         "custom/metar" = {
@@ -47,28 +51,13 @@ in
           on-click-right = "${pkgs.chromium}/bin/chromium --new-window https://e6bx.com/weather/KMIA/?showDecoded=1&focuspoint=metardecoder";
         };
 
-        "custom/duplicati" = {
-          format = "{}";
-          return-type = "json";
-          exec = "${duplicatiScript}/bin/duplicati";
-          interval = 300;
-          on-click = "${pkgs.chromium}/bin/chromium --new-window http://localhost:8200";
-        };
-
-        "custom/timew" = {
-          format = "{}";
-          return-type = "json";
-          exec = "${timewScript}/bin/timew";
-          interval = 30;
-        };
-
         "memory" = {
-          format = "RAM: {percentage}%";
+          format = "M {percentage}%";
           interval = 30;
         };
 
         "cpu" = {
-          format = "CPU: {usage}%";
+          format = "C {usage}%";
           interval = 30;
         };
 
@@ -80,11 +69,12 @@ in
         };
 
         "network" = {
-          format-wifi = " {essid} ({signalStrength}%)";
+          format-wifi = "  {signalStrength}%";
           format-ethernet = " {ifname}";
           format-linked = " {ifname} (No IP)";
-          format-disconnected = "Disconnected";
-          format-alt = "{ifname}: {ipaddr}/{cidr}";
+          format-disconnected = " ";
+          format-alt = "{ifname}: {essid} {ipaddr}/{cidr}";
+          tooltip-format = "{ifname}: {essid} {ipaddr}/{cidr}";
           interval = 5;
         };
 
@@ -169,32 +159,14 @@ in
         color: ${c.red};
       }
 
+      #network.disconnected {
+        color: ${c.red};
+      }
+
       #custom-metar.warning {
         color: ${c.yellow};
       }
 
-      #custom-duplicati.good {
-        color: ${c.green};
-      }
-      #custom-duplicati.warning {
-        color: ${c.orange};
-      }
-      #custom-duplicati.critical {
-        color: ${c.red};
-      }
-
-      #custom-timew.active {
-        color: ${c.green};
-      }
-      #custom-timew.gap-short {
-        color: ${c.blue};
-      }
-      #custom-timew.gap-long {
-        color: ${c.yellow};
-      }
-      #custom-timew.critical {
-        color: ${c.red};
-      }
     '';
   };
 }
