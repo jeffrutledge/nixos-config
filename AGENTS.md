@@ -12,6 +12,7 @@ Make edits to this AGENTS.md file when:
 # Style
 - Do your best to modularize the configuration into different files
 - Refer to binaries in the nix way. For example `${pkgs.firefox}/bin/firefox` instead of `firefox`.
+- Prefer `writeShellApplication` over `writeShellScriptBin`
 - For custom scripts or packages, always use the interpolated path `${pkg}/bin/binary` in configurations rather than relying on `exec binary` and the PATH.
 
 # Post change hooks
