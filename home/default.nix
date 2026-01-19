@@ -11,6 +11,7 @@
     ./starship.nix
     ./packages.nix
     ./waybar
+    ./neovim
   ];
   fonts.fontconfig.enable = true;
   home.stateVersion = "25.11";

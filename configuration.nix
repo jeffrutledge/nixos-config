@@ -83,13 +83,6 @@
 
     zsh.enable = true;
 
-    neovim = {
-      enable = true;
-      defaultEditor = true;
-      viAlias = true;
-      vimAlias = true;
-    };
-
     gnupg.agent.enable = true;
   };
 
