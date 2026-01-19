@@ -126,7 +126,7 @@ in
     style = ''
       * {
         font-family: ${f.family};
-        font-size: ${toString f.size}px;
+        font-size: ${toString (f.size * 1.33)}px;
       }
 
       window#waybar {
