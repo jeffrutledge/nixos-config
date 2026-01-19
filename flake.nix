@@ -15,6 +15,10 @@
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -22,6 +26,16 @@
     let
       system = "x86_64-linux";
       pkgs = nixpkgs.legacyPackages.${system};
+      treefmtEval = inputs.treefmt-nix.lib.evalModule pkgs {
+        programs.nixfmt.enable = true;
+        programs.stylua = {
+          enable = true;
+          settings = {
+            indent_type = "Spaces";
+            indent_width = 2;
+          };
+        };
+      };
     in
     {
       nixosModules.default = {
@@ -40,7 +54,7 @@
           }
         ];
       };
-      formatter.${system} = nixpkgs.legacyPackages.${system}.nixfmt;
+      formatter.${system} = treefmtEval.config.build.wrapper;
       devShells.${system}.default = pkgs.mkShell {
         packages = [
           (pkgs.callPackage ./home/waybar/scripts/metar.nix { })
