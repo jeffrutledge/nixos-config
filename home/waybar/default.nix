@@ -90,6 +90,7 @@ in
               ""
             ];
           };
+          reverse-scrolling = 1;
         };
 
         "battery" = {
