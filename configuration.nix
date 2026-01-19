@@ -22,6 +22,7 @@
   ];
 
   services = {
+    tzupdate.enable = true;
     userborn.enable = true;
 
     openssh = {
