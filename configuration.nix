@@ -16,6 +16,10 @@
     };
   };
 
+  # See [readme](README.md#ipv6-troubleshooting)
+  boot.kernelParams = [ "ipv6.disable=1" ];
+  networking.enableIPv6 = false;
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
