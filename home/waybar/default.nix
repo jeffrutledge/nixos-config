@@ -83,7 +83,7 @@ in
 
         "pulseaudio" = {
           format = "{icon} {volume}%";
-          format-muted = " Muted";
+          format-muted = "{icon} m{volume}%";
           format-icons = {
             default = [
               ""
@@ -165,6 +165,14 @@ in
 
       #network.disconnected {
         color: ${c.red};
+      }
+
+      #pulseaudio {
+        color: ${c.blue};
+      }
+
+      #pulseaudio.muted {
+        color: ${c.base1};
       }
 
       #custom-metar.warning {
