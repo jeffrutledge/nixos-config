@@ -11,6 +11,10 @@ in
 {
   programs.waybar = {
     enable = true;
+    systemd = {
+      enable = true;
+      target = "sway-session.target";
+    };
     settings = {
       mainBar = {
         layer = "top";
