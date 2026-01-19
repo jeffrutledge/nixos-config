@@ -34,13 +34,23 @@ in
               nvim-web-devicons
               blink-cmp
               nvim-lint
+              leap-nvim
+              snacks-nvim
+              orgmode
+              conform-nvim
+              nvim-lspconfig
+              tiny-inline-diagnostic-nvim
             ];
           };
           lspsAndRuntimeDeps = {
             general = with pkgs; [
               shellcheck
               statix
+              lua-language-server
               luajitPackages.luacheck
+              stylua
+              nixfmt
+              nixd
             ];
           };
         };

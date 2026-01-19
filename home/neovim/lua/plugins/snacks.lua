@@ -1,0 +1,16 @@
+require("snacks").setup({
+  picker = {},
+})
+
+vim.keymap.set("n", "<leader>ff", function()
+  Snacks.picker.files()
+end, { desc = "Find files" })
+vim.keymap.set("n", "<leader>fg", function()
+  Snacks.picker.grep()
+end, { desc = "Grep" })
+vim.keymap.set("n", "<leader>fb", function()
+  Snacks.picker.buffers()
+end, { desc = "Buffers" })
+vim.keymap.set("n", "<leader>fh", function()
+  Snacks.picker.help()
+end, { desc = "Help" })
