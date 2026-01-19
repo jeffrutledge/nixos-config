@@ -1,13 +1,13 @@
 { pkgs, ... }:
 {
   imports = [
-    ./sway.nix
+    ./sway
     ./git
     ./rofi.nix
     ./theme.nix
-    ./firefox.nix
+    ./firefox
     ./alacritty
-    ./zsh
+    ./zsh.nix
     ./starship.nix
     ./packages.nix
     ./waybar

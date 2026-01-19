@@ -14,8 +14,8 @@ let
   m_external = "DP-1";
   menu = "${pkgs.rofi}/bin/rofi -show drun";
   dmenuOpts = "-i -fn '${f.family}-${toString f.size}' -nb ${c.base02} -nf ${c.base1} -sb ${c.blue} -sf ${c.base3}";
-  alacrittyCwdLaunch = import ./alacritty/alacritty-cwd-launch.nix { inherit pkgs; };
-  externalDisplay = import ./sway/external-display.nix {
+  alacrittyCwdLaunch = import ../alacritty/alacritty-cwd-launch.nix { inherit pkgs; };
+  externalDisplay = import ./external-display.nix {
     inherit pkgs;
     internal = m_internal;
     external = m_external;

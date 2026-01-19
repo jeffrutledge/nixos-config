@@ -6,8 +6,8 @@
 }:
 let
   colors = config.theme.colors;
-  startpage = import ./firefox/startpage.nix { inherit pkgs colors; };
-  tridactylrc = import ./firefox/tridactylrc.nix { inherit colors; };
+  startpage = import ./startpage.nix { inherit pkgs colors; };
+  tridactylrc = import ./tridactylrc.nix { inherit colors; };
 in
 {
   home.file.".config/tridactyl/tridactylrc".text = tridactylrc;
