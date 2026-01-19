@@ -17,5 +17,5 @@ Make edits to this AGENTS.md file when:
 
 # Post change hooks
 1. Add newly created untracked files with `git add -N NEWLY_CREATED_FILE`
-2. Test `nix flake check` passes
+2. Test `nix flake check` passes. Ignore warnings about dirty Git tree
 3. Format with `nix fmt **/*.nix`
