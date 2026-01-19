@@ -103,7 +103,7 @@ in
           format = "{icon} {capacity}% {time}";
           format-charging = " {capacity}% {time}";
           format-plugged = " {capacity}% {time}";
-	  format-time = "{H}h{M}";
+          format-time = "{H}h{M}";
           format-icons = [
             ""
             ""
@@ -131,6 +131,15 @@ in
 
       window#waybar {
         background-color: ${c.base03};
+        color: ${c.base0};
+      }
+
+      tooltip {
+        background: ${c.base03};
+        border: 1px solid ${c.blue};
+      }
+
+      tooltip label {
         color: ${c.base0};
       }
 
