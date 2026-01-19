@@ -9,5 +9,8 @@
     wl-clipboard
     material-design-icons
     font-awesome
+    brightnessctl
+    wireplumber
+    playerctl
   ];
 }

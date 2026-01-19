@@ -128,6 +128,16 @@ in
         "${mod}+z" = "exec ${pkgs.dunst}/bin/dunstctl context";
         "${mod}+${move_mod}+z" = "exec ${pkgs.dunst}/bin/dunstctl history-pop";
 
+        # Media / Brightness
+        "XF86AudioMute" = "exec ${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+        "XF86AudioLowerVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-";
+        "XF86AudioRaiseVolume" = "exec ${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+";
+        "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
+        "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
+        "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
+        "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
+        "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
+
         # Focus / Movement (Vim-style)
         "${mod}+h" = "focus left";
         "${mod}+j" = "focus down";
