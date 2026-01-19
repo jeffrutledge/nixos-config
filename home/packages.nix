@@ -7,5 +7,7 @@
     tree
     ripgrep
     wl-clipboard
+    material-design-icons
+    font-awesome
   ];
 }

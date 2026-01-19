@@ -108,9 +108,15 @@
     packages = with pkgs; [
       dejavu_fonts
       nerd-fonts.dejavu-sans-mono
+      nerd-fonts.symbols-only
+      noto-fonts-color-emoji
     ];
     fontconfig.defaultFonts = {
-      monospace = [ "DejaVuSansM Nerd Font" ];
+      monospace = [
+        "DejaVuSansM Nerd Font"
+        "Symbols Nerd Font"
+        "Noto Color Emoji"
+      ];
       sansSerif = [ "DejaVu Sans" ];
       serif = [ "DejaVu Serif" ];
     };

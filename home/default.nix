@@ -12,5 +12,6 @@
     ./packages.nix
     ./waybar
   ];
+  fonts.fontconfig.enable = true;
   home.stateVersion = "25.11";
 }
