@@ -11,40 +11,40 @@ solarized_custom.inactive.b = { fg = "#586e75", bg = "#073642" }
 solarized_custom.inactive.c = { fg = "#586e75", bg = "#002b36" }
 
 local function lsp_status()
-	local clients = vim.lsp.get_clients({ bufnr = 0 })
+  local clients = vim.lsp.get_clients({ bufnr = 0 })
 
-	if #clients == 0 then
-		return "No LSP"
-	end
+  if #clients == 0 then
+    return "No LSP"
+  end
 
-	local names = {}
-	for _, client in ipairs(clients) do
-		table.insert(names, client.name)
-	end
-	return "󰄭 " .. table.concat(names, "|")
+  local names = {}
+  for _, client in ipairs(clients) do
+    table.insert(names, client.name)
+  end
+  return "󰄭 " .. table.concat(names, "|")
 end
 
 require("lualine").setup({
-	options = {
-		theme = solarized_custom,
-		icons_enabled = true,
-	},
-	sections = {
-		lualine_a = {
-			"mode",
-			{
-				function()
-					return "SPELL"
-				end,
-				cond = function()
-					return vim.wo.spell
-				end,
-			},
-		},
-		lualine_b = { "diagnostics" },
-		lualine_c = { "filename" },
-		lualine_x = { lsp_status, "filetype" },
-		lualine_y = { "progress" },
-		lualine_z = { "location" },
-	},
+  options = {
+    theme = solarized_custom,
+    icons_enabled = true,
+  },
+  sections = {
+    lualine_a = {
+      "mode",
+      {
+        function()
+          return "SPELL"
+        end,
+        cond = function()
+          return vim.wo.spell
+        end,
+      },
+    },
+    lualine_b = { "diagnostics" },
+    lualine_c = { "filename" },
+    lualine_x = { lsp_status, "filetype" },
+    lualine_y = { "progress" },
+    lualine_z = { "location" },
+  },
 })

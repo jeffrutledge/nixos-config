@@ -51,6 +51,7 @@ in
               stylua
               nixfmt
               nixd
+              markdownlint-cli
             ];
           };
         };
