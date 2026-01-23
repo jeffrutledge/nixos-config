@@ -359,6 +359,26 @@ in
           "l" = "resize grow width 10 px or 10 ppt";
           "space" = "floating toggle";
           "s" = "sticky toggle";
+          # Set horizontal size to 1/n
+          "2" = "resize set width 50 ppt";
+          "3" = "resize set width 33 ppt";
+          "4" = "resize set width 25 ppt";
+          "5" = "resize set width 20 ppt";
+          "6" = "resize set width 17 ppt";
+          "7" = "resize set width 14 ppt";
+          "8" = "resize set width 12 ppt";
+          "9" = "resize set width 11 ppt";
+          "0" = "resize set width 10 ppt";
+          # Set vertical size to 1/n (shift+number)
+          "at" = "resize set height 50 ppt";
+          "numbersign" = "resize set height 33 ppt";
+          "dollar" = "resize set height 25 ppt";
+          "percent" = "resize set height 20 ppt";
+          "asciicircum" = "resize set height 17 ppt";
+          "ampersand" = "resize set height 14 ppt";
+          "asterisk" = "resize set height 12 ppt";
+          "parenleft" = "resize set height 11 ppt";
+          "parenright" = "resize set height 10 ppt";
           "Return" = "mode \"default\"";
           "Escape" = "mode \"default\"";
         };
