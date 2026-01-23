@@ -351,10 +351,6 @@ in
 
       startup = [
         {
-          command = "${pkgs.dunst}/bin/dunst -config ~/.dunstrc";
-          always = true;
-        }
-        {
           command = "systemctl --user restart waybar";
           always = true;
         }

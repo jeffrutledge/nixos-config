@@ -12,6 +12,7 @@
     ./packages.nix
     ./waybar
     ./neovim
+    ./dunst.nix
   ];
   fonts.fontconfig.enable = true;
   home.stateVersion = "25.11";
