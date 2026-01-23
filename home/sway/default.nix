@@ -24,10 +24,35 @@ let
 in
 {
   home.packages = with pkgs; [
-    swaylock
     swayidle
     dmenu
   ];
+
+  programs.swaylock = {
+    enable = true;
+    settings = {
+      color = c.base03;
+      inside-color = c.base02;
+      inside-clear-color = c.base02;
+      inside-ver-color = c.base02;
+      inside-wrong-color = c.base02;
+      key-hl-color = c.blue;
+      bs-hl-color = c.orange;
+      ring-color = c.base01;
+      ring-clear-color = c.yellow;
+      ring-ver-color = c.blue;
+      ring-wrong-color = c.red;
+      text-color = c.base1;
+      text-clear-color = c.yellow;
+      text-ver-color = c.blue;
+      text-wrong-color = c.red;
+      line-color = c.base03;
+      line-clear-color = c.base03;
+      line-ver-color = c.base03;
+      line-wrong-color = c.base03;
+      separator-color = c.base03;
+    };
+  };
 
   services.swayidle = {
     enable = true;
