@@ -20,6 +20,7 @@ let
     internal = m_internal;
     external = m_external;
   };
+  mute = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 1";
 in
 {
   home.packages = with pkgs; [
@@ -31,8 +32,8 @@ in
   services.swayidle = {
     enable = true;
     events = {
-      before-sleep = "${pkgs.swaylock}/bin/swaylock -fF";
-      lock = "${pkgs.swaylock}/bin/swaylock -fF";
+      before-sleep = "${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
+      lock = "${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
     };
     timeouts = [
       {
@@ -332,14 +333,18 @@ in
           command = "systemctl --user restart waybar";
           always = true;
         }
+        {
+          command = mute;
+          always = false;
+        }
       ];
 
       modes = {
         exit = {
-          "l" = "mode \"default\", exec ${pkgs.swaylock}/bin/swaylock";
+          "l" = "mode \"default\", exec ${mute} && ${pkgs.swaylock}/bin/swaylock";
           "e" = "mode \"default\", exec swaymsg exit";
-          "s" = "mode \"default\", exec systemctl suspend-then-hibernate";
-          "h" = "mode \"default\", exec systemctl hibernate";
+          "s" = "mode \"default\", exec ${mute} && systemctl suspend-then-hibernate";
+          "h" = "mode \"default\", exec ${mute} && systemctl hibernate";
           "r" = "mode \"default\", exec systemctl reboot";
           "p" = "mode \"default\", exec systemctl poweroff";
           "Return" = "mode \"default\"";
