@@ -5,7 +5,7 @@
   ...
 }:
 let
-  colors = config.theme.colors;
+  inherit (config.theme) colors;
   startpage = import ./startpage.nix { inherit pkgs colors; };
   tridactylrc = import ./tridactylrc.nix { inherit colors; };
 in
@@ -67,6 +67,7 @@ in
         # --- COSMETIC ---
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable UI changes with userChrome.css
         "browser.tabs.firefox-view" = false;
+        "sidebar.verticalTabs" = false; # Disable vertical tabs, use horizontal tabs at top
         "browser.startup.homepage" = "file://${startpage}";
         "browser.newtabpage.enabled" = true;
         "browser.newtab.url" = "file://${startpage}";
@@ -77,9 +78,73 @@ in
       };
 
       userChrome = ''
-        /* Hide the top Tab Bar */
-        #TabsToolbar { 
-          visibility: collapse !important; 
+        /* Move tab bar below URL bar */
+        #navigator-toolbox {
+          display: flex !important;
+          flex-direction: column !important;
+        }
+
+        #nav-bar {
+          order: 1 !important;
+        }
+
+        #TabsToolbar {
+          order: 2 !important;
+        }
+
+        /* Tab Bar solarized styling - compact */
+        #TabsToolbar {
+          background-color: ${colors.base03} !important;
+          min-height: 0 !important;
+          padding: 0 !important;
+        }
+
+        /* Compact tab styling */
+        .tabbrowser-tab {
+          background-color: ${colors.base02} !important;
+          color: ${colors.base0} !important;
+          min-height: 32px !important;
+          max-height: 32px !important;
+          padding: 0 8px !important;
+        }
+
+        .tabbrowser-tab[selected="true"] {
+          background-color: ${colors.base01} !important;
+          color: ${colors.base1} !important;
+        }
+
+        .tabbrowser-tab:hover:not([selected="true"]) {
+          background-color: ${colors.base01} !important;
+        }
+
+        .tab-background {
+          background-color: inherit !important;
+          border: none !important;
+          min-height: 24px !important;
+          max-height: 24px !important;
+        }
+
+        .tab-background[selected="true"] {
+          background-color: ${colors.base01} !important;
+        }
+
+        /* Compact tab text */
+        .tab-label {
+          color: inherit !important;
+          font-size: 12px !important;
+        }
+
+        /* Compact tab close button */
+        .tab-close-button {
+          width: 16px !important;
+          height: 16px !important;
+        }
+
+        /* New tab button */
+        #tabs-newtab-button {
+          color: ${colors.base0} !important;
+          min-height: 32px !important;
+          max-height: 32px !important;
         }
 
         /* Slim down the Address Bar (URL Bar) */
