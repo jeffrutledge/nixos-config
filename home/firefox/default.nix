@@ -15,6 +15,27 @@ in
   programs.firefox = {
     enable = true;
     package = pkgs.firefox;
+    policies = {
+      "3rdparty".Extensions."addon@darkreader.org" = {
+        enabled = true;
+        theme = {
+          mode = 1; # dark mode
+          brightness = 100;
+          contrast = 100;
+          grayscale = 0;
+          sepia = 0;
+          useFont = false;
+          textStroke = 0;
+          darkSchemeBackgroundColor = colors.base03;
+          darkSchemeTextColor = colors.base0;
+          lightSchemeBackgroundColor = colors.base3;
+          lightSchemeTextColor = colors.base00;
+          scrollbarColor = "";
+          selectionColor = "auto";
+          styleSystemControls = false;
+        };
+      };
+    };
     profiles.default = {
       id = 0;
       name = "Default";
