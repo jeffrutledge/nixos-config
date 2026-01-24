@@ -135,7 +135,7 @@ in
 
       window#waybar {
         background-color: ${c.base03};
-        color: ${c.base0};
+        color: ${c.base1};
       }
 
       tooltip {
@@ -144,19 +144,36 @@ in
       }
 
       tooltip label {
-        color: ${c.base0};
+        color: ${c.base1};
       }
 
+      /* inactive_workspace: base03 border, base03 bg, base01 text */
       #workspaces button {
         padding: 0 5px;
-        background-color: transparent;
-        color: ${c.base0};
+        background-color: ${c.base03};
+        color: ${c.base01};
+        border: 2px solid ${c.base03};
       }
 
+      /* focused_workspace: blue border, base02 bg, base1 text */
       #workspaces button.focused {
         background-color: ${c.base02};
         color: ${c.base1};
-        border-bottom: 2px solid ${c.blue};
+        border: 2px solid ${c.blue};
+      }
+
+      /* active_workspace: violet border, base02 bg, base1 text */
+      #workspaces button.visible:not(.focused) {
+        background-color: ${c.base02};
+        color: ${c.base1};
+        border: 2px solid ${c.violet};
+      }
+
+      /* urgent_workspace: red border, base3 bg, base01 text */
+      #workspaces button.urgent {
+        background-color: ${c.base3};
+        color: ${c.base01};
+        border: 2px solid ${c.red};
       }
 
       #custom-metar, #custom-duplicati, #custom-timew, #memory, #cpu, #bluetooth, #network, #pulseaudio, #battery, #clock {
@@ -192,6 +209,13 @@ in
 
       #custom-metar.warning {
         color: ${c.yellow};
+      }
+
+      #mode {
+        background-color: ${c.base02};
+        border: 2px solid ${c.green};
+        color: ${c.base1};
+        padding: 0 10px;
       }
 
     '';
