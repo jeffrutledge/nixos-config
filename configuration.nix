@@ -26,7 +26,16 @@
   ];
 
   services = {
-    localtimed.enable = true;
+    automatic-timezoned.enable = true;
+
+    geoclue2 = {
+      enable = true;
+      appConfig."automatic-timezoned" = {
+        isAllowed = true;
+        isSystem = true;
+      };
+    };
+
     userborn.enable = true;
 
     openssh = {
