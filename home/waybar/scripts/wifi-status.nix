@@ -21,6 +21,6 @@ pkgs.writeShellApplication {
 
     ping_stats="$(printf %.0f "$loss_pct")% ''${avg_ms}󰦒''${std_ms}ms"
 
-    notify-send -t 2000 -a wifi_blocklet "WiFi Stats" "$ping_stats"
+    notify-send -a wifi_blocklet "WiFi Stats" "$ping_stats"
   '';
 }

@@ -4,8 +4,6 @@ let
   f = config.theme.font;
 
   metarScript = import ./scripts/metar.nix { inherit pkgs; };
-  duplicatiScript = import ./scripts/duplicati.nix { inherit pkgs; };
-  timewScript = import ./scripts/timew.nix { inherit pkgs; };
   wifiStatusScript = import ./scripts/wifi-status.nix { inherit pkgs; };
 in
 {
@@ -52,8 +50,7 @@ in
           return-type = "json";
           exec = "${metarScript}/bin/metar";
           interval = 30;
-          on-click = "${pkgs.libnotify}/bin/notify-send -t 60000 -a metar_blocklet METAR-TAF \"$(${pkgs.coreutils}/bin/cat ~/.cache/metar_blocklet/metar)\" ";
-          on-click-right = "${pkgs.chromium}/bin/chromium --new-window https://e6bx.com/weather/KMIA/?showDecoded=1&focuspoint=metardecoder";
+          on-click = "${pkgs.firefox}/bin/firefox --new-window https://e6bx.com/weather/KMIA/?showDecoded=1&focuspoint=metardecoder";
         };
 
         "memory" = {
@@ -82,7 +79,7 @@ in
           format-alt = "{ifname}: {essid} {ipaddr}/{cidr}";
           tooltip-format = "{ifname}: {essid} {ipaddr}/{cidr}";
           interval = 5;
-          on-scroll-up = "${wifiStatusScript}/bin/wifi-status";
+          on-click-right = "${wifiStatusScript}/bin/wifi-status";
         };
 
         "pulseaudio" = {
@@ -176,6 +173,14 @@ in
         border: 2px solid ${c.red};
       }
 
+      #mode {
+        background-color: ${c.base02};
+        border: 2px solid ${c.green};
+        color: ${c.base1};
+        padding: 0 10px;
+      }
+
+
       #custom-metar, #custom-duplicati, #custom-timew, #memory, #cpu, #bluetooth, #network, #pulseaudio, #battery, #clock {
         padding: 0 10px;
         margin: 0 2px;
@@ -209,13 +214,6 @@ in
 
       #custom-metar.warning {
         color: ${c.yellow};
-      }
-
-      #mode {
-        background-color: ${c.base02};
-        border: 2px solid ${c.green};
-        color: ${c.base1};
-        padding: 0 10px;
       }
 
     '';
