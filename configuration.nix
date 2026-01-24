@@ -26,7 +26,7 @@
   ];
 
   services = {
-    tzupdate.enable = true;
+    localtimed.enable = true;
     userborn.enable = true;
 
     openssh = {
