@@ -89,6 +89,8 @@ in
       input = {
         "type:touchpad" = {
           tap = "enabled";
+          click_method = "clickfinger";
+          drag = "disabled";
           natural_scroll = "enabled";
           pointer_accel = "0.4";
         };
