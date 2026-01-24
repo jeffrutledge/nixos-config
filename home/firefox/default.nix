@@ -72,9 +72,6 @@ in
         "browser.newtabpage.enabled" = true;
         "browser.newtab.url" = "file://${startpage}";
         "ui.key.menuAccessKeyFocuses" = false;
-
-        # --- TRIDACTYL ---
-        "extensions.tridactyl.newtab" = "true";
       };
 
       userChrome = ''
