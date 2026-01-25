@@ -13,5 +13,6 @@
     brightnessctl
     wireplumber
     playerctl
+    vlc
   ];
 }
