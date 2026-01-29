@@ -6,6 +6,8 @@
 }:
 
 let
+  preLockCmd = config.sway.preLockCommand;
+  preLockPrefix = if preLockCmd != "" then "${preLockCmd}; " else "";
   c = config.theme.colors;
   f = config.theme.font;
   mod = "Mod1";
@@ -23,7 +25,14 @@ let
   mute = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 1";
 in
 {
-  home.packages = with pkgs; [
+  options.sway.preLockCommand = lib.mkOption {
+    type = lib.types.str;
+    default = "";
+    description = "Command to run before locking/sleeping";
+  };
+
+  config = {
+    home.packages = with pkgs; [
     swayidle
     dmenu
   ];
@@ -57,8 +66,8 @@ in
   services.swayidle = {
     enable = true;
     events = {
-      before-sleep = "${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
-      lock = "${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
+      before-sleep = "${preLockPrefix}${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
+      lock = "${preLockPrefix}${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
     };
     timeouts = [
       {
@@ -419,5 +428,6 @@ in
       # Compatibility for some xwayland apps
       xwayland enable
     '';
+  };
   };
 }
