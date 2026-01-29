@@ -29,6 +29,7 @@ in
         {
           startupPlugins = {
             general = with pkgs.vimPlugins; [
+              nvim-treesitter.withAllGrammars
               nvim-solarized-lua
               lualine-nvim
               nvim-web-devicons
@@ -37,6 +38,7 @@ in
               leap-nvim
               snacks-nvim
               orgmode
+              neorg
               conform-nvim
               nvim-lspconfig
               tiny-inline-diagnostic-nvim
