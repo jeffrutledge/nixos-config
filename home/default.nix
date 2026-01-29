@@ -13,6 +13,7 @@
     ./waybar
     ./neovim
     ./dunst.nix
+    ./zathura.nix
   ];
   fonts.fontconfig.enable = true;
   home.stateVersion = "25.11";
