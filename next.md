@@ -1,3 +1,5 @@
+# Next
+
 - background
 - tailscale
   - check for direct with `tailscale status`
