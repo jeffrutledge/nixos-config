@@ -19,6 +19,10 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    git-hooks = {
+      url = "github:cachix/git-hooks.nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -33,6 +37,15 @@
           settings = {
             indent_type = "Spaces";
             indent_width = 2;
+          };
+        };
+      };
+      pre-commit-check = inputs.git-hooks.lib.${system}.run {
+        src = ./.;
+        hooks = {
+          treefmt = {
+            enable = true;
+            package = treefmtEval.config.build.wrapper;
           };
         };
       };
@@ -56,6 +69,7 @@
       };
       formatter.${system} = treefmtEval.config.build.wrapper;
       devShells.${system}.default = pkgs.mkShell {
+        inherit (pre-commit-check) shellHook;
         packages = [
           (pkgs.callPackage ./home/waybar/scripts/metar.nix { })
           (pkgs.callPackage ./home/waybar/scripts/duplicati.nix { })
