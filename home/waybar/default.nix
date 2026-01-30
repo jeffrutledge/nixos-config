@@ -5,6 +5,7 @@ let
 
   metarScript = import ./scripts/metar.nix { inherit pkgs; };
   wifiStatusScript = import ./scripts/wifi-status.nix { inherit pkgs; };
+  pingStatusScript = import ./scripts/ping-status.nix { inherit pkgs; };
 in
 {
   programs.waybar = {
@@ -31,6 +32,7 @@ in
           "cpu"
           "bluetooth"
           "network"
+          "custom/ping"
           "pulseaudio"
           "battery"
           "clock"
@@ -80,6 +82,13 @@ in
           tooltip-format = "{ifname}: {essid} {ipaddr}/{cidr}";
           interval = 5;
           on-click-right = "${wifiStatusScript}/bin/wifi-status";
+        };
+
+        "custom/ping" = {
+          format = "{}";
+          return-type = "json";
+          exec = "${pingStatusScript}/bin/ping-status";
+          interval = 30;
         };
 
         "pulseaudio" = {
@@ -181,7 +190,7 @@ in
       }
 
 
-      #custom-metar, #custom-duplicati, #custom-timew, #memory, #cpu, #bluetooth, #network, #pulseaudio, #battery, #clock {
+      #custom-metar, #custom-duplicati, #custom-timew, #memory, #cpu, #bluetooth, #network, #custom-ping, #pulseaudio, #battery, #clock {
         padding: 0 10px;
         margin: 0 2px;
         background-color: ${c.base02};
@@ -214,6 +223,14 @@ in
 
       #custom-metar.warning {
         color: ${c.yellow};
+      }
+
+      #custom-ping.warning {
+        color: ${c.yellow};
+      }
+
+      #custom-ping.critical {
+        color: ${c.magenta};
       }
 
     '';
