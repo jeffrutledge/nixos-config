@@ -14,6 +14,7 @@
     ./neovim
     ./dunst.nix
     ./zathura.nix
+    ./direnv.nix
   ];
   fonts.fontconfig.enable = true;
   home.stateVersion = "25.11";
