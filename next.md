@@ -1,11 +1,13 @@
 # Next
 
-- background
+- desktop nixos setup
+  - headscale
 - tailscale
   - check for direct with `tailscale status`
   - magic dns
-- desktop nixos setup
-  - headscale
+- background
+- nix check pre push hook
+- metar auto update location
 - syncthing
 - backup with restic
 - snapshot file recovery
