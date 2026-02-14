@@ -3,7 +3,15 @@ local function get_project_root()
 end
 
 require("snacks").setup({
-  picker = {},
+  picker = {
+    win = {
+      input = {
+        keys = {
+          ["<c-.>"] = { "toggle_hidden", mode = { "i", "n" } },
+        },
+      },
+    },
+  },
 })
 
 vim.keymap.set("n", "<leader>ff", function()
