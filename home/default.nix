@@ -1,5 +1,16 @@
-{ pkgs, ... }:
 {
+  pkgs,
+  lib,
+  config,
+  ...
+}:
+{
+  options.custom.nixosConfigPath = lib.mkOption {
+    type = lib.types.str;
+    default = "~/nixos/nixos-config";
+    description = "Path to the nixos-config repository checkout";
+  };
+
   imports = [
     ./sway
     ./git
@@ -16,6 +27,9 @@
     ./zathura.nix
     ./direnv.nix
   ];
-  fonts.fontconfig.enable = true;
-  home.stateVersion = "25.11";
+
+  config = {
+    fonts.fontconfig.enable = true;
+    home.stateVersion = "25.11";
+  };
 }

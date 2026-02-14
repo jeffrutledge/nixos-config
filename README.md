@@ -1,4 +1,4 @@
-# NixOS Config Module
+# NixOS Configuration Module
 
 I use this module to configure my personal computers. This is a module instead
 of a standalone configuration because that allows me to keep some private parts
@@ -6,7 +6,7 @@ of the configuration in a separate location and reference this public module.
 
 ## Usage
 
-Import this module in a nixos configuration. Somthing like this:
+1. Import this module in a NixOS configuration. Something like this:
 
 ```nix
 {
@@ -38,11 +38,22 @@ Import this module in a nixos configuration. Somthing like this:
 }
 ```
 
+1. Clone `nixos-confg` to `~/nixos/nixos-config/`, or set the clone location in:
+  
+```nix
+    home-manager.users.jrutledge = {
+      custom.nixosConfigPath = "~/foobar/nixos-config";
+    };
+```
+
+This is used so files can be updated by programs and tracked in git, e.g. Vim's
+spell file.
+
 ## Troubleshooting
 
 ### IPv6 Troubleshooting
 
-I ended up disabling ipv6 to resolve some timeout issues.
+I ended up disabling IPv6 to resolve some timeout issues.
 
 ```nix
 boot.kernelParams = [ "ipv6.disable=1" ];
@@ -50,8 +61,8 @@ networking.enableIPv6 = false;
 ```
 
 The alternate solution also made <https://test-ipv6.com/> load quickly. With
-ipv6 disable the site still loads slowly but the curl returns quickly and I
-believe captive wifi portals will still work.
+IPv6 disable the site still loads slowly but the curl returns quickly and I
+believe captive WiFi portals will still work.
 
 #### Why
 
@@ -66,8 +77,8 @@ I also noticed slowness running tests at <https://test-ipv6.com/>.
 
 #### Alternate solution
 
-This also resolved the slowness, but I believe forcing nameservers will break
-captive wifi portals.
+This also resolved the slowness, but I believe forcing `nameservers` will break
+captive WiFi portals.
 
 ```nix
 networking.nameservers = [ "1.1.1.1" "8.8.8.8" ];
@@ -103,7 +114,7 @@ services.resolved = {
 
 ```
 
-- Prefer ipv4 addresses
+- Prefer IPv4 addresses
 
 ```nix
 {
