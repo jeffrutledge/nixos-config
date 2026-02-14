@@ -72,7 +72,7 @@ in
       timeouts = [
         {
           timeout = 300; # 5 minutes of inactivity
-          command = "systemctl suspend-then-hibernate";
+          command = "${pkgs.systemd}/bin/systemctl suspend-then-hibernate";
         }
       ];
     };

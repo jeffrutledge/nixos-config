@@ -69,8 +69,6 @@
 
     logind = {
       settings.Login = {
-        IdleAction = "suspend-then-hibernate";
-        IdleActionSec = "5m";
         HandleLidSwitch = "suspend-then-hibernate";
         HandleLidSwitchDocked = "suspend-then-hibernate";
       };
