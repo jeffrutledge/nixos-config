@@ -47,6 +47,14 @@
             enable = true;
             package = treefmtEval.config.build.wrapper;
           };
+          flake-check = {
+            enable = true;
+            name = "nix flake check";
+            entry = "nix flake check";
+            language = "system";
+            pass_filenames = false;
+            stages = [ "pre-push" ];
+          };
         };
       };
     in
