@@ -42,6 +42,7 @@ in
               conform-nvim
               nvim-lspconfig
               tiny-inline-diagnostic-nvim
+              oil-nvim
             ];
           };
           lspsAndRuntimeDeps = {
