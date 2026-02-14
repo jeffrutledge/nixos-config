@@ -64,6 +64,9 @@ in
         "extensions.formautofill.addresses.enabled" = false;
         "extensions.formautofill.creditCards.enabled" = false;
 
+        # --- SESSION ---
+        "browser.startup.page" = 3; # Restore previous session
+
         # --- COSMETIC ---
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable UI changes with userChrome.css
         "browser.tabs.firefox-view" = false;
