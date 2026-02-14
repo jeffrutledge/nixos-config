@@ -25,5 +25,8 @@ require("blink.cmp").setup({
     documentation = {
       auto_show = true,
     },
+    list = {
+      selection = { preselect = false },
+    },
   },
 })
