@@ -90,8 +90,8 @@
         ];
       };
       nixosConfigurations.check-target = nixpkgs.lib.nixosSystem {
-        inherit system;
         modules = [
+          { nixpkgs.hostPlatform = system; }
           self.nixosModules.default
         ];
       };
