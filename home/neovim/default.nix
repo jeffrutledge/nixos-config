@@ -1,17 +1,31 @@
 {
   inputs,
   pkgs,
+  lib,
+  config,
   ...
 }:
 let
   utils = inputs.nixCats.utils;
+  cfg = config.programs.neovim-custom;
 in
 {
   imports = [
     inputs.nixCats.homeModule
   ];
 
+  options.programs.neovim-custom = {
+    nixosConfigPath = lib.mkOption {
+      type = lib.types.str;
+      default = "~/nixos/nixos-config";
+      description = "Path to the nixos-config repository checkout";
+    };
+  };
+
   config = {
+    home.sessionVariables = {
+      NIXOS_CONFIG_PATH = cfg.nixosConfigPath;
+    };
     nixCats = {
       enable = true;
       addOverlays = [
