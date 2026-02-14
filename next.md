@@ -5,16 +5,16 @@
 - tailscale
   - check for direct with `tailscale status`
   - magic dns
-- background
-- nix check pre push hook
+- background and lock images
 - metar auto update location
 - syncthing
 - backup with restic
 - snapshot file recovery
 - notes
+  - neorg to org
+  - sync to phone
 - wdiff
-- suspend on idle
 - firefox intentional youtube
-- firefox bookmarks
-- nmcli profile save to nixos
+- firefox bookmarks copy from old laptop
+- nmcli profile save to nixos config
 - bootable media that auto recovers
