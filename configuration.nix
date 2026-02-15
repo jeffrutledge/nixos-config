@@ -74,6 +74,14 @@
       };
     };
 
+    upower = {
+      enable = true;
+      percentageLow = 15;
+      percentageCritical = 10;
+      percentageAction = 5;
+      criticalPowerAction = "Hibernate";
+    };
+
   };
 
   systemd.sleep.extraConfig = ''
