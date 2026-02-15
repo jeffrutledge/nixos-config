@@ -9,6 +9,7 @@
   " Completion navigation bindings
   bind --mode=ex <C-j> ex.next_completion
   bind --mode=ex <C-k> ex.prev_completion
+  bind W tabdetach
 
   " Custom CSS for Tridactyl UI elements
   set customcss :root { \
