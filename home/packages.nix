@@ -14,5 +14,6 @@
     wireplumber
     playerctl
     vlc
+    loupe
   ];
 }
