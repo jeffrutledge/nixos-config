@@ -64,6 +64,9 @@ in
         "extensions.formautofill.addresses.enabled" = false;
         "extensions.formautofill.creditCards.enabled" = false;
 
+        # --- DOWNLOADS ---
+        "browser.download.useDownloadDir" = false; # Always ask where to save
+
         # --- SESSION ---
         "browser.startup.page" = 3; # Restore previous session
 
