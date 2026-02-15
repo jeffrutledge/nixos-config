@@ -19,18 +19,17 @@ pkgs.writeShellApplication {
     class=$(echo "$focused" | jq -r '.window_properties.class')
 
     if [ "$app_id" = "Alacritty" ] || [ "$class" = "Alacritty" ]; then
-        # Get the child process (shell) of the alacritty instance
-        # pgrep -P returns the child PIDs. We take the first one.
-        child_pid=$(pgrep -P "$pid" | head -n 1)
+        # Find the deepest child process (handles nested shells)
+        current_pid="$pid"
+        while child_pid=$(pgrep -P "$current_pid" | head -n 1); do
+            current_pid="$child_pid"
+        done
 
-        if [ -n "$child_pid" ]; then
-            # Get the current working directory of the child process
-            cwd=$(readlink "/proc/$child_pid/cwd")
+        cwd=$(readlink "/proc/$current_pid/cwd")
 
-            if [ -d "$cwd" ]; then
-                alacritty --working-directory "$cwd"
-                exit 0
-            fi
+        if [ -d "$cwd" ]; then
+            alacritty --working-directory "$cwd"
+            exit 0
         fi
     fi
 
