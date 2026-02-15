@@ -107,8 +107,8 @@ in
         "battery" = {
           states = {
             good = 95;
-            warning = 30;
-            critical = 15;
+            warning = 20;
+            critical = 10;
           };
           format = "{icon} {capacity}% {time}";
           format-charging = " {capacity}% {time}";
@@ -123,6 +123,10 @@ in
           ];
           interval = 30;
           tooltip-format = "{power:.2f} W {health}/100 H";
+          events = {
+            on-discharging-warning = "notify-send -a 'waybar' -u normal 'Low Battery'";
+            on-discharging-critical = "notify-send -a 'waybar' -u critical 'Very Low Battery'";
+          };
         };
 
         "clock" = {
