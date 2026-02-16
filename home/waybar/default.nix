@@ -6,6 +6,7 @@ let
   metarScript = import ./scripts/metar.nix { inherit pkgs; };
   wifiStatusScript = import ./scripts/wifi-status.nix { inherit pkgs; };
   pingStatusScript = import ./scripts/ping-status.nix { inherit pkgs; };
+  caffeine = import ../caffeine { inherit pkgs; };
 in
 {
   programs.waybar = {
@@ -25,6 +26,7 @@ in
         ];
         modules-center = [ ];
         modules-right = [
+          "custom/caffeine"
           "custom/metar"
           "custom/duplicati"
           "custom/timew"
@@ -45,6 +47,14 @@ in
           rewrite = {
             "^\\d+:(.*)$" = "$1";
           };
+        };
+
+        "custom/caffeine" = {
+          format = "{}";
+          return-type = "json";
+          exec = "${caffeine.status}/bin/caffeine-status";
+          interval = 1;
+          signal = 8;
         };
 
         "custom/metar" = {
@@ -235,6 +245,13 @@ in
 
       #custom-ping.critical {
         color: ${c.magenta};
+      }
+
+      #custom-caffeine.enabled {
+        background-color: ${c.base02};
+        border: 2px solid ${c.yellow};
+        color: ${c.base1};
+        padding: 0 10px;
       }
 
     '';

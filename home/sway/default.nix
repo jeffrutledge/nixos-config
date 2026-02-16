@@ -23,6 +23,9 @@ let
     external = m_external;
   };
   mute = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 1";
+  lockCmd = "${preLockPrefix}${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
+  caffeine = import ../caffeine { inherit pkgs; };
+  caffeineToggle = caffeine.mkToggle { inherit lockCmd; };
 in
 {
   options.sway.preLockCommand = lib.mkOption {
@@ -66,8 +69,8 @@ in
     services.swayidle = {
       enable = true;
       events = {
-        before-sleep = "${preLockPrefix}${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
-        lock = "${preLockPrefix}${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
+        before-sleep = lockCmd;
+        lock = lockCmd;
       };
       timeouts = [
         {
@@ -249,6 +252,9 @@ in
           "${mod}+e" = "mode \"exit\"";
           "${mod}+d" = "mode \"display\"";
           "${mod}+r" = "mode \"resize\"";
+
+          # Caffeine toggle
+          "${mod}+c" = "exec ${caffeineToggle}/bin/caffeine-toggle";
         };
 
         # Workspace Assignments to Monitors
