@@ -63,7 +63,7 @@ in
           format = "{}";
           return-type = "json";
           exec = "${caffeine.status}/bin/caffeine-status";
-          interval = 1;
+          interval = 30;
           signal = 8;
         };
 
