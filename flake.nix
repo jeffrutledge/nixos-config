@@ -76,19 +76,29 @@
         ];
       };
       formatter.${system} = treefmtEval.config.build.wrapper;
-      devShells.${system}.default = pkgs.mkShell {
-        inherit (pre-commit-check) shellHook;
-        packages = [
-          (pkgs.callPackage ./home/waybar/scripts/metar.nix { })
-          (pkgs.callPackage ./home/waybar/scripts/duplicati.nix { })
-          (pkgs.callPackage ./home/waybar/scripts/timew.nix { })
-          (pkgs.callPackage ./home/waybar/scripts/wifi-status.nix { })
-          (pkgs.callPackage ./home/sway/external-display.nix {
-            internal = "eDP-1";
-            external = "DP-1";
-          })
-        ];
-      };
+      devShells.${system}.default =
+        let
+          caffeine = pkgs.callPackage ./home/caffeine { };
+          brightness = pkgs.callPackage ./home/brightness { };
+        in
+        pkgs.mkShell {
+          inherit (pre-commit-check) shellHook;
+          packages = [
+            (pkgs.callPackage ./home/waybar/scripts/metar.nix { })
+            (pkgs.callPackage ./home/waybar/scripts/duplicati.nix { })
+            (pkgs.callPackage ./home/waybar/scripts/timew.nix { })
+            (pkgs.callPackage ./home/waybar/scripts/wifi-status.nix { })
+            (pkgs.callPackage ./home/waybar/scripts/ping-status.nix { })
+            (pkgs.callPackage ./home/sway/external-display.nix {
+              internal = "eDP-1";
+              external = "DP-1";
+            })
+            (caffeine.mkToggle { lockCmd = "echo \"lock command placeholder\""; })
+            caffeine.status
+            brightness.update
+            brightness.status
+          ];
+        };
       nixosConfigurations.check-target = nixpkgs.lib.nixosSystem {
         modules = [
           { nixpkgs.hostPlatform = system; }

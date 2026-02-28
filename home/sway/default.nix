@@ -26,6 +26,8 @@ let
   lockCmd = "${preLockPrefix}${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
   caffeine = import ../caffeine { inherit pkgs; };
   caffeineToggle = caffeine.mkToggle { inherit lockCmd; };
+  brightness = import ../brightness { inherit pkgs; };
+  brightnessUpdate = brightness.update;
 in
 {
   options.sway.preLockCommand = lib.mkOption {
@@ -175,8 +177,10 @@ in
           "XF86AudioPrev" = "exec ${pkgs.playerctl}/bin/playerctl previous";
           "XF86AudioPlay" = "exec ${pkgs.playerctl}/bin/playerctl play-pause";
           "XF86AudioNext" = "exec ${pkgs.playerctl}/bin/playerctl next";
-          "XF86MonBrightnessDown" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%-";
-          "XF86MonBrightnessUp" = "exec ${pkgs.brightnessctl}/bin/brightnessctl set +5%";
+          "XF86MonBrightnessDown" =
+            "exec ${pkgs.brightnessctl}/bin/brightnessctl set 5%- && ${brightnessUpdate}/bin/brightness-update";
+          "XF86MonBrightnessUp" =
+            "exec ${pkgs.brightnessctl}/bin/brightnessctl set +5% && ${brightnessUpdate}/bin/brightness-update";
 
           # Focus / Movement (Vim-style)
           "${mod}+h" = "focus left";

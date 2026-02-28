@@ -7,6 +7,7 @@ let
   wifiStatusScript = import ./scripts/wifi-status.nix { inherit pkgs; };
   pingStatusScript = import ./scripts/ping-status.nix { inherit pkgs; };
   caffeine = import ../caffeine { inherit pkgs; };
+  brightness = import ../brightness { inherit pkgs; };
 in
 {
   programs.waybar = {
@@ -26,6 +27,7 @@ in
         ];
         modules-center = [ ];
         modules-right = [
+          "custom/brightness"
           "custom/caffeine"
           "custom/metar"
           "custom/duplicati"
@@ -47,6 +49,14 @@ in
           rewrite = {
             "^\\d+:(.*)$" = "$1";
           };
+        };
+
+        "custom/brightness" = {
+          format = "{}";
+          return-type = "json";
+          exec = "${brightness.status}/bin/brightness-status";
+          interval = 30;
+          signal = 9;
         };
 
         "custom/caffeine" = {
@@ -204,7 +214,7 @@ in
       }
 
 
-      #custom-metar, #custom-duplicati, #custom-timew, #memory, #cpu, #bluetooth, #network, #custom-ping, #pulseaudio, #battery, #clock {
+      #custom-brightness, #custom-metar, #custom-duplicati, #custom-timew, #memory, #cpu, #bluetooth, #network, #custom-ping, #pulseaudio, #battery, #clock {
         padding: 0 10px;
         margin: 0 2px;
         background-color: ${c.base02};
