@@ -15,5 +15,7 @@
     playerctl
     vlc
     loupe
+    zip
+    unzip
   ];
 }
