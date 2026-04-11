@@ -87,10 +87,13 @@ in
 
         "bluetooth" = {
           format = " {status}";
+          format-disabled = "";
+          format-off = "";
           format-connected = " {device_alias}";
           format-connected-battery = " {device_alias} {device_battery_percentage}%";
           format-no-controller = "";
           interval = 5;
+          on-click = "${pkgs.bluez}/bin/bluetoothctl show | ${pkgs.gnugrep}/bin/grep -q 'Powered: yes' && ${pkgs.bluez}/bin/bluetoothctl power off || ${pkgs.bluez}/bin/bluetoothctl power on";
         };
 
         "network" = {
@@ -219,6 +222,30 @@ in
         margin: 0 2px;
         background-color: ${c.base02};
         color: ${c.base1};
+      }
+
+      #bluetooth.disabled {
+        color: ${c.magenta};
+      }
+
+      #bluetooth.on {
+        color: ${c.blue};
+      }
+
+      #bluetooth.discoverable {
+        color: ${c.orange};
+      }
+
+      #bluetooth.discovering {
+        color: ${c.orange};
+      }
+
+      #bluetooth.pairable {
+        color: ${c.orange};
+      }
+
+      #bluetooth.connected {
+        color: ${c.green};
       }
 
       #battery.charging {
