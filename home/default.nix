@@ -26,6 +26,7 @@
     ./dunst.nix
     ./zathura.nix
     ./direnv.nix
+    ./readline.nix
   ];
 
   config = {

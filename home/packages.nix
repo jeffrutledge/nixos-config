@@ -19,5 +19,6 @@
     loupe
     zip
     unzip
+    python3
   ];
 }
