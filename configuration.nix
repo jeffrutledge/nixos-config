@@ -25,6 +25,11 @@
     "flakes"
   ];
 
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+  };
+
   services = {
     automatic-timezoned.enable = true;
 
@@ -45,6 +50,13 @@
         KbdInteractiveAuthentication = false;
         PermitRootLogin = "no";
       };
+    };
+
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      pulse.enable = true;
     };
 
     kanata = {

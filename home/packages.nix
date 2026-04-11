@@ -12,6 +12,8 @@
     font-awesome
     brightnessctl
     wireplumber
+    pavucontrol
+    blueman
     playerctl
     vlc
     loupe
