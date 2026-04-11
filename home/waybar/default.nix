@@ -94,6 +94,7 @@ in
           format-no-controller = "";
           interval = 5;
           on-click = "${pkgs.bluez}/bin/bluetoothctl show | ${pkgs.gnugrep}/bin/grep -q 'Powered: yes' && ${pkgs.bluez}/bin/bluetoothctl power off || ${pkgs.bluez}/bin/bluetoothctl power on";
+          on-click-right = "${pkgs.blueman}/bin/blueman-manager";
         };
 
         "network" = {
