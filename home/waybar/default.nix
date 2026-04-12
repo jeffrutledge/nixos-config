@@ -1,4 +1,9 @@
-{ config, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 let
   c = config.theme.colors;
   f = config.theme.font;
@@ -10,7 +15,25 @@ let
   brightness = import ../brightness { inherit pkgs; };
 in
 {
-  programs.waybar = {
+  options.custom.waybar = {
+    extraRightModules = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ];
+      description = "Extra module names inserted after custom/timew in modules-right";
+    };
+    extraModuleSettings = lib.mkOption {
+      type = lib.types.attrs;
+      default = { };
+      description = "Extra module settings merged into waybar mainBar";
+    };
+    extraStyle = lib.mkOption {
+      type = lib.types.str;
+      default = "";
+      description = "Extra CSS appended to waybar style";
+    };
+  };
+
+  config.programs.waybar = {
     enable = true;
     systemd = {
       enable = true;
@@ -32,6 +55,9 @@ in
           "custom/metar"
           "custom/duplicati"
           "custom/timew"
+        ]
+        ++ config.custom.waybar.extraRightModules
+        ++ [
           "memory"
           "cpu"
           "bluetooth"
@@ -158,7 +184,8 @@ in
           interval = 1;
           tooltip-format = "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>";
         };
-      };
+      }
+      // config.custom.waybar.extraModuleSettings;
     };
 
     style = ''
@@ -292,6 +319,7 @@ in
         padding: 0 10px;
       }
 
-    '';
+    ''
+    + config.custom.waybar.extraStyle;
   };
 }
