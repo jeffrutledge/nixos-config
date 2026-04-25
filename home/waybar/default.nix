@@ -13,6 +13,15 @@ let
   pingStatusScript = import ./scripts/ping-status.nix { inherit pkgs; };
   caffeine = import ../caffeine { inherit pkgs; };
   brightness = import ../brightness { inherit pkgs; };
+
+  btToggle = pkgs.writeShellScript "bt-toggle" ''
+    powered=$(${pkgs.systemd}/bin/busctl get-property org.bluez /org/bluez/hci0 org.bluez.Adapter1 Powered 2>/dev/null)
+    if [ "$powered" = "b true" ]; then
+      ${pkgs.bluez}/bin/bluetoothctl power off
+    else
+      ${pkgs.bluez}/bin/bluetoothctl power on
+    fi
+  '';
 in
 {
   options.custom.waybar = {
@@ -119,7 +128,7 @@ in
           format-connected-battery = " {device_alias} {device_battery_percentage}%";
           format-no-controller = "";
           interval = 5;
-          on-click = "${pkgs.bluez}/bin/bluetoothctl show | ${pkgs.gnugrep}/bin/grep -q 'Powered: yes' && ${pkgs.bluez}/bin/bluetoothctl power off || ${pkgs.bluez}/bin/bluetoothctl power on";
+          on-click = "${btToggle}";
           on-click-right = "${pkgs.blueman}/bin/blueman-manager";
         };
 
