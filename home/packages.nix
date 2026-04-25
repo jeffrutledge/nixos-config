@@ -20,5 +20,7 @@
     zip
     unzip
     python3
+    qpdf
+    pdftk
   ];
 }
