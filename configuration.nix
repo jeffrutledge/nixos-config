@@ -96,9 +96,7 @@
 
   };
 
-  systemd.sleep.extraConfig = ''
-    HibernateDelaySec=300
-  '';
+  systemd.sleep.settings.Sleep.HibernateDelaySec = 300;
 
   security.polkit.enable = true;
 
