@@ -47,6 +47,7 @@ in
               nvim-lspconfig
               tiny-inline-diagnostic-nvim
               oil-nvim
+              vimtex
             ];
           };
           lspsAndRuntimeDeps = {
@@ -59,6 +60,8 @@ in
               nixfmt
               nixd
               markdownlint-cli
+              texliveFull
+              zathura
             ];
           };
         };

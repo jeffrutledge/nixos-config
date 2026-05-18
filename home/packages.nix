@@ -22,5 +22,6 @@
     python3
     qpdf
     pdftk
+    texliveFull
   ];
 }
