@@ -13,6 +13,10 @@ in
   ];
 
   config = {
+    home.file.".config/markdownlint/config.json".text = builtins.toJSON {
+      MD013 = false;
+    };
+
     home.sessionVariables = {
       NIXOS_CONFIG_PATH = config.custom.nixosConfigPath;
     };

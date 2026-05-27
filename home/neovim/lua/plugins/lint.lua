@@ -7,6 +7,11 @@ lint.linters_by_ft = {
   markdown = { "markdownlint" },
 }
 
+lint.linters.markdownlint.args = {
+  "--config",
+  vim.fn.expand("~/.config/markdownlint/config.json"),
+}
+
 vim.api.nvim_create_autocmd({ "BufWritePost", "BufReadPost", "InsertLeave", "BufEnter" }, {
   callback = function()
     vim.defer_fn(function()
