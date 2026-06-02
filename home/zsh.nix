@@ -44,6 +44,10 @@
       setopt HIST_VERIFY
       setopt APPEND_HISTORY
       setopt HIST_REDUCE_BLANKS
+
+      _open_pdf() { zathura "$1" &>/dev/null &! }
+      alias -s pdf='_open_pdf'
+      alias -s PDF='_open_pdf'
     '';
   };
 
