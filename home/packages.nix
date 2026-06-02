@@ -23,5 +23,6 @@
     qpdf
     pdftk
     texliveFull
+    chromium
   ];
 }
