@@ -11,6 +11,8 @@ let
   metarScript = import ./scripts/metar.nix { inherit pkgs; };
   wifiStatusScript = import ./scripts/wifi-status.nix { inherit pkgs; };
   pingStatusScript = import ./scripts/ping-status.nix { inherit pkgs; };
+  fwupdScript = import ./scripts/fwupd.nix { inherit pkgs; };
+  fwupdShow = import ./scripts/fwupd-show.nix { inherit pkgs; };
   caffeine = import ../caffeine { inherit pkgs; };
   brightness = import ../brightness { inherit pkgs; };
 
@@ -63,6 +65,7 @@ in
           "custom/caffeine"
           "custom/metar"
           "custom/duplicati"
+          "custom/fwupd"
           "custom/timew"
         ]
         ++ config.custom.waybar.extraRightModules
@@ -141,6 +144,14 @@ in
           tooltip-format = "{ifname}: {essid} {ipaddr}/{cidr}";
           interval = 5;
           on-click-right = "${wifiStatusScript}/bin/wifi-status";
+        };
+
+        "custom/fwupd" = {
+          format = "{}";
+          return-type = "json";
+          exec = "${fwupdScript}/bin/fwupd-status";
+          interval = 3600;
+          on-click = "${pkgs.alacritty}/bin/alacritty -e ${fwupdShow}/bin/fwupd-show";
         };
 
         "custom/ping" = {
@@ -254,7 +265,7 @@ in
       }
 
 
-      #custom-brightness, #custom-metar, #custom-duplicati, #custom-timew, #memory, #cpu, #bluetooth, #network, #custom-ping, #pulseaudio, #battery, #clock {
+      #custom-brightness, #custom-metar, #custom-duplicati, #custom-fwupd, #custom-timew, #memory, #cpu, #bluetooth, #network, #custom-ping, #pulseaudio, #battery, #clock {
         padding: 0 10px;
         margin: 0 2px;
         background-color: ${c.base02};
@@ -307,6 +318,10 @@ in
 
       #pulseaudio.muted {
         color: ${c.base1};
+      }
+
+      #custom-fwupd.available {
+        color: ${c.yellow};
       }
 
       #custom-metar.warning {

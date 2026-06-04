@@ -89,6 +89,8 @@
             (pkgs.callPackage ./home/waybar/scripts/timew.nix { })
             (pkgs.callPackage ./home/waybar/scripts/wifi-status.nix { })
             (pkgs.callPackage ./home/waybar/scripts/ping-status.nix { })
+            (pkgs.callPackage ./home/waybar/scripts/fwupd.nix { })
+            (pkgs.callPackage ./home/waybar/scripts/fwupd-show.nix { })
             (pkgs.callPackage ./home/sway/external-display.nix {
               internal = "eDP-1";
               external = "DP-1";
