@@ -8,7 +8,6 @@
 - background and lock images
 - metar auto update location
 - syncthing
-- backup with restic
 - snapshot file recovery
 - notes
   - neorg to org
