@@ -24,5 +24,6 @@
     pdftk
     texliveFull
     chromium
+    xournalpp
   ];
 }
