@@ -27,6 +27,7 @@
     ./zathura.nix
     ./direnv.nix
     ./readline.nix
+    ./ai-coding.nix
   ];
 
   config = {

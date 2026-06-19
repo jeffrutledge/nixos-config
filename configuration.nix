@@ -31,6 +31,18 @@
   };
 
   services = {
+    ollama = {
+      enable = true;
+      loadModels = [
+        "qwen2.5-coder:7b"
+        "deepseek-coder-v2:16b"
+        "qwen2.5-coder:32b"
+        "deepseek-r1:32b"
+        "llama3.3:70b"
+        "qwen2.5:72b"
+      ];
+    };
+
     automatic-timezoned.enable = true;
 
     geoclue2 = {
