@@ -15,13 +15,13 @@ pkgs.writeShellApplication {
     if [[ ! -e "$cache_dir/last_cache_epoch" ]] || ! (( $(cat "$cache_dir/last_cache_epoch") > $(date -d '-30sec' +%s) )); then
       taf=$(curl -4 -m 5 -s -X 'GET' "https://aviationweather.gov/api/data/taf?ids=$airport" -H 'accept: */*')
       taf_ret=$?
-      [[ $taf_ret == 0 ]] && echo "$taf" > "$cache_dir/taf"
+      [[ $taf_ret == 0 && -n "$taf" ]] && echo "$taf" > "$cache_dir/taf"
 
       metar=$(curl -4 -m 5 -s -X 'GET' "https://aviationweather.gov/api/data/metar?ids=$airport" -H 'accept: */*')
       metar_ret=$?
-      [[ $metar_ret == 0 ]] && echo "$metar" > "$cache_dir/metar"
+      [[ $metar_ret == 0 && -n "$metar" ]] && echo "$metar" > "$cache_dir/metar"
 
-      [[ $taf_ret == 0 && $metar_ret == 0 ]] && date +%s > "$cache_dir/last_cache_epoch"
+      [[ $taf_ret == 0 && $metar_ret == 0 && -n "$taf" && -n "$metar" ]] && date +%s > "$cache_dir/last_cache_epoch"
     fi
 
     if [[ -f "$cache_dir/taf" ]]; then
@@ -47,6 +47,12 @@ pkgs.writeShellApplication {
 
     # Warning if cache older than 60m
     if [[ ! -e "$cache_dir/last_cache_epoch" ]] || ! (( $(cat "$cache_dir/last_cache_epoch") > $(date -d '-60min' +%s) )); then
+      class="warning"
+    fi
+
+    # Never emit empty text — waybar hides the module when text is blank
+    if [[ -z "$metar_no_remark" ]]; then
+      metar_no_remark="METAR N/A"
       class="warning"
     fi
 
