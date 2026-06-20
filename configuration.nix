@@ -25,6 +25,14 @@
     "flakes"
   ];
 
+  hardware.graphics = {
+    enable = true;
+    extraPackages = with pkgs; [
+      intel-media-driver
+      intel-compute-runtime
+    ];
+  };
+
   hardware.bluetooth = {
     enable = true;
     powerOnBoot = false;
@@ -33,6 +41,7 @@
   services = {
     ollama = {
       enable = true;
+      package = pkgs.ollama-vulkan;
       loadModels = [
         "qwen2.5-coder:7b"
         "deepseek-coder-v2:16b"
