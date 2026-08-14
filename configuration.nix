@@ -23,6 +23,11 @@
   boot.kernelParams = [ "ipv6.disable=1" ];
   networking.enableIPv6 = false;
 
+  # Allow REISUB (minus the E/I process-kill signal, which can bypass a
+  # locked screen's lock process) to recover from a frozen system without
+  # a hard power-off, which has caused btrfs corruption in the past.
+  boot.kernel.sysctl."kernel.sysrq" = 180;
+
   nix.settings.experimental-features = [
     "nix-command"
     "flakes"
