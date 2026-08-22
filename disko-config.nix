@@ -32,51 +32,43 @@
                 };
               };
             };
-            zfs = {
+            luksRoot = {
               size = "100%";
               content = {
-                type = "zfs";
-                pool = "zroot";
+                type = "luks";
+                name = "luksRoot";
+                settings = {
+                  allowDiscards = true;
+                  bypassWorkqueues = true;
+                };
+                content = {
+                  type = "btrfs";
+                  extraArgs = [ "-f" ];
+                  subvolumes = {
+                    "/root" = {
+                      mountpoint = "/";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/home" = {
+                      mountpoint = "/home";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                    "/nix" = {
+                      mountpoint = "/nix";
+                      mountOptions = [
+                        "compress=zstd"
+                        "noatime"
+                      ];
+                    };
+                  };
+                };
               };
-            };
-          };
-        };
-      };
-    };
-    zpool = {
-      zroot = {
-        type = "zpool";
-        options.ashift = "12";
-        rootFsOptions = {
-          mountpoint = "none";
-          canmount = "off";
-
-          compression = "zstd";
-
-          # xattr=sa is faster than the default dir-based xattrs
-          acltype = "posixacl";
-          xattr = "sa";
-
-          atime = "off";
-          encryption = "aes-256-gcm";
-          keyformat = "passphrase";
-          keylocation = "prompt";
-        };
-        datasets = {
-          root = {
-            type = "zfs_fs";
-            mountpoint = "/";
-          };
-          home = {
-            type = "zfs_fs";
-            mountpoint = "/home";
-          };
-          nix = {
-            type = "zfs_fs";
-            mountpoint = "/nix";
-            options = {
-              # bigger blocks for the store's large immutable files
-              recordsize = "1M";
             };
           };
         };

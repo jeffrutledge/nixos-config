@@ -14,7 +14,6 @@
 
   networking = {
     hostName = "misty";
-    hostId = "9ddfdb10";
     networkmanager = {
       enable = true;
     };
@@ -24,18 +23,10 @@
   boot.kernelParams = [ "ipv6.disable=1" ];
   networking.enableIPv6 = false;
 
-  # Allow REISUB to recover from a frozen system without a hard power-off
+  # Allow REISUB (minus the E/I process-kill signal, which can bypass a
+  # locked screen's lock process) to recover from a frozen system without
+  # a hard power-off, which has caused btrfs corruption in the past.
   boot.kernel.sysctl."kernel.sysrq" = 180;
-
-  boot.supportedFilesystems = [ "zfs" ];
-  boot.zfs.forceImportRoot = false;
-  boot.zfs.requestEncryptionCredentials = true;
-  boot.initrd.systemd.enable = true;
-
-  services.zfs.autoScrub.enable = true;
-
-  # cap ARC so it doesn't compete with ollama for RAM
-  boot.extraModprobeConfig = "options zfs zfs_arc_max=17179869184";
 
   nix.settings.experimental-features = [
     "nix-command"
