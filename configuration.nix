@@ -79,8 +79,6 @@
       };
     };
 
-    userborn.enable = true;
-
     openssh = {
       enable = true;
       settings = {
