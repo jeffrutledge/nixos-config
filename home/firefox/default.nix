@@ -137,12 +137,12 @@ in
           padding: 0 8px !important;
         }
 
-        .tabbrowser-tab[selected="true"] {
+        .tabbrowser-tab[selected] {
           background-color: ${colors.base01} !important;
           color: ${colors.base1} !important;
         }
 
-        .tabbrowser-tab:hover:not([selected="true"]) {
+        .tabbrowser-tab:hover:not([selected]) {
           background-color: ${colors.base01} !important;
         }
 
@@ -153,7 +153,7 @@ in
           max-height: 24px !important;
         }
 
-        .tab-background[selected="true"] {
+        .tab-background[selected] {
           background-color: ${colors.base01} !important;
         }
 
