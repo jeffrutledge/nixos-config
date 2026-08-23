@@ -1,6 +1,8 @@
 { pkgs, colors }:
 
-pkgs.writeText "startpage.html" ''
+pkgs.runCommand "startpage" { } ''
+  mkdir -p $out
+  cat > $out/index.html <<EOF
   <!DOCTYPE html>
   <html>
   <head>
@@ -16,4 +18,5 @@ pkgs.writeText "startpage.html" ''
   <body>
   </body>
   </html>
+  EOF
 ''

@@ -1,6 +1,9 @@
-{ colors }:
+{ colors, newtabUrl }:
 ''
   set smoothscroll true
+
+  " Use our custom start page instead of Tridactyl's own new tab page
+  set newtab ${newtabUrl}
 
   " Tridactyl Solarized Theme
   set bg ${colors.base03}

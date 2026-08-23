@@ -7,10 +7,32 @@
 let
   inherit (config.theme) colors;
   startpage = import ./startpage.nix { inherit pkgs colors; };
-  tridactylrc = import ./tridactylrc.nix { inherit colors; };
+  startpagePort = 8971;
+  startpageUrl = "http://127.0.0.1:${toString startpagePort}/";
+  tridactylrc = import ./tridactylrc.nix {
+    inherit colors;
+    newtabUrl = startpageUrl;
+  };
 in
 {
   home.file.".config/tridactyl/tridactylrc".text = tridactylrc;
+
+  # Tridactyl (and other WebExtensions) can't inject content scripts into
+  # file:// pages without an extra permission, and even with it the new-tab
+  # page still isn't a normal page context. Serving the start page over
+  # http://127.0.0.1 instead lets Tridactyl's keybindings work on it.
+  systemd.user.services.firefox-startpage = {
+    Unit = {
+      Description = "Local HTTP server for the Firefox start/new-tab page";
+    };
+    Service = {
+      ExecStart = "${pkgs.python3}/bin/python3 -m http.server ${toString startpagePort} --bind 127.0.0.1 --directory ${startpage}";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
 
   programs.firefox = {
     enable = true;
@@ -78,9 +100,9 @@ in
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true; # Enable UI changes with userChrome.css
         "browser.tabs.firefox-view" = false;
         "sidebar.verticalTabs" = false; # Disable vertical tabs, use horizontal tabs at top
-        "browser.startup.homepage" = "file://${startpage}";
+        "browser.startup.homepage" = startpageUrl;
         "browser.newtabpage.enabled" = true;
-        "browser.newtab.url" = "file://${startpage}";
+        "browser.newtab.url" = startpageUrl;
         "ui.key.menuAccessKeyFocuses" = false;
       };
 
