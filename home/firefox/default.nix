@@ -49,6 +49,9 @@ in
       ];
 
       settings = {
+        # Don't auto-disable extensions installed via extensions.packages
+        "extensions.autoDisableScopes" = 0;
+
         # --- WAYLAND & PERFORMANCE ---
         "gfx.webrender.all" = true;
         "widget.wayland.fractional-scale.enabled" = true;
