@@ -25,5 +25,7 @@
     texliveFull
     chromium
     xournalpp
+    obsidian
+    markdownlint-cli
   ];
 }

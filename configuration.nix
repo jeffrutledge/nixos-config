@@ -158,6 +158,7 @@
     pkg:
     builtins.elem (lib.getName pkg) [
       "claude-code"
+      "obsidian"
     ];
 
   fonts = {

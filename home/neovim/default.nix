@@ -52,6 +52,8 @@ in
               tiny-inline-diagnostic-nvim
               oil-nvim
               vimtex
+              render-markdown-nvim
+              obsidian-nvim
             ];
           };
           lspsAndRuntimeDeps = {
