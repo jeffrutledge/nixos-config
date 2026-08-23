@@ -10,12 +10,13 @@ let
   startpagePort = 8971;
   startpageUrl = "http://127.0.0.1:${toString startpagePort}/";
   tridactylrc = import ./tridactylrc.nix {
-    inherit colors;
     newtabUrl = startpageUrl;
   };
+  tridactylTheme = import ./tridactyl-theme.nix { inherit colors; };
 in
 {
   home.file.".config/tridactyl/tridactylrc".text = tridactylrc;
+  home.file.".config/tridactyl/themes/solarized.css".text = tridactylTheme;
 
   # Tridactyl (and other WebExtensions) can't inject content scripts into
   # file:// pages without an extra permission, and even with it the new-tab

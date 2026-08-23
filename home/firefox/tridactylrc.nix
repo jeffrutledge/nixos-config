@@ -1,4 +1,4 @@
-{ colors, newtabUrl }:
+{ newtabUrl }:
 ''
   set smoothscroll true
 
@@ -6,21 +6,10 @@
   set newtab ${newtabUrl}
 
   " Tridactyl Solarized Theme
-  set bg ${colors.base03}
-  set fg ${colors.base0}
+  colourscheme solarized
 
   " Completion navigation bindings
   bind --mode=ex <C-j> ex.next_completion
   bind --mode=ex <C-k> ex.prev_completion
   bind W tabdetach
-
-  " Custom CSS for Tridactyl UI elements
-  set customcss :root { \
-    --tridactyl-bg: ${colors.base03}; \
-    --tridactyl-fg: ${colors.base0}; \
-    --tridactyl-url-fg: ${colors.blue}; \
-    --tridactyl-url-bg: ${colors.base02}; \
-    --tridactyl-highlight-box-bg: ${colors.yellow}; \
-    --tridactyl-highlight-box-fg: ${colors.base03}; \
-  }
 ''
