@@ -13,7 +13,7 @@ let
       mkdir -p "$snap_dir"
 
       now=$(date +%s)
-      snap_name=$(date -d "@$now" +%Y%m%dT%H%M%S)
+      snap_name=$(date -u -d "@$now" +%Y-%m-%dT%H:%M:%SZ)
       btrfs subvolume snapshot -r "$subvol" "$snap_dir/$snap_name"
 
       declare -A last_bucket
@@ -30,11 +30,10 @@ let
       mapfile -t snaps < <(find "$snap_dir" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort -r)
 
       for name in "''${snaps[@]}"; do
-        if [[ ! "$name" =~ ^[0-9]{8}T[0-9]{6}$ ]]; then
+        if [[ ! "$name" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ ]]; then
           continue
         fi
-        snap_date="''${name:0:4}-''${name:4:2}-''${name:6:2} ''${name:9:2}:''${name:11:2}:''${name:13:2}"
-        epoch=$(date -d "$snap_date" +%s)
+        epoch=$(date -d "$name" +%s)
         age=$(( now - epoch ))
 
         keep=0
@@ -54,9 +53,31 @@ let
       done
     '';
   };
+
+  homeSnapshotList = pkgs.writeShellApplication {
+    name = "btrfs-home-snapshot-list";
+    runtimeInputs = [
+      pkgs.coreutils
+      pkgs.findutils
+    ];
+    text = ''
+      snap_dir=/home/.snapshots
+
+      find "$snap_dir" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort -r | while read -r name; do
+        if [[ ! "$name" =~ ^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$ ]]; then
+          continue
+        fi
+        local_time=$(date -d "$name" +%Y-%m-%dT%H:%M:%S_%Z)
+        echo "$name  $local_time"
+      done
+    '';
+  };
 in
 {
-  environment.systemPackages = [ homeSnapshot ];
+  environment.systemPackages = [
+    homeSnapshot
+    homeSnapshotList
+  ];
 
   systemd.services.btrfs-home-snapshot = {
     description = "Create and prune rolling btrfs snapshots of /home";
