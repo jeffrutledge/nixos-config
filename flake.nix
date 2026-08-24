@@ -64,6 +64,7 @@
           inputs.disko.nixosModules.disko
           ./disko-config.nix
           ./configuration.nix
+          ./btrfs-snapshots.nix
           inputs.home-manager.nixosModules.home-manager
           {
             home-manager = {
