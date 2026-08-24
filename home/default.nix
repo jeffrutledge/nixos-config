@@ -28,6 +28,7 @@
     ./direnv.nix
     ./readline.nix
     ./ai-coding.nix
+    ./snap
   ];
 
   config = {
