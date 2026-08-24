@@ -8,9 +8,7 @@
 - background and lock images
 - metar auto update location
 - syncthing
-- snapshot file recovery
 - notes
-  - neorg to org
   - sync to phone
 - wdiff
 - firefox intentional youtube
