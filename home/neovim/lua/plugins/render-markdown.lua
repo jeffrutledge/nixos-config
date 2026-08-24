@@ -1,1 +1,3 @@
-require("render-markdown").setup({})
+require("render-markdown").setup({
+  sign = { enabled = false },
+})
