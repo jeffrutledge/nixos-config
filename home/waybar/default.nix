@@ -13,6 +13,7 @@ let
   pingStatusScript = import ./scripts/ping-status.nix { inherit pkgs; };
   fwupdScript = import ./scripts/fwupd.nix { inherit pkgs; };
   fwupdShow = import ./scripts/fwupd-show.nix { inherit pkgs; };
+  fsStatusScript = import ./scripts/fs-status.nix { inherit pkgs; };
   caffeine = import ../caffeine { inherit pkgs; };
   brightness = import ../brightness { inherit pkgs; };
 
@@ -65,8 +66,9 @@ in
           "custom/caffeine"
           "custom/metar"
           "custom/duplicati"
-          "custom/fwupd"
           "custom/timew"
+          "custom/fwupd"
+          "custom/fs"
         ]
         ++ config.custom.waybar.extraRightModules
         ++ [
@@ -111,6 +113,13 @@ in
           exec = "${metarScript}/bin/metar";
           interval = 30;
           on-click = "${pkgs.firefox}/bin/firefox --new-window https://e6bx.com/weather/KMIA/?showDecoded=1&focuspoint=metardecoder";
+        };
+
+        "custom/fs" = {
+          format = "{}";
+          return-type = "json";
+          exec = "${fsStatusScript}/bin/fs-status";
+          interval = 300;
         };
 
         "memory" = {
@@ -265,7 +274,7 @@ in
       }
 
 
-      #custom-brightness, #custom-metar, #custom-duplicati, #custom-fwupd, #custom-timew, #memory, #cpu, #bluetooth, #network, #custom-ping, #pulseaudio, #battery, #clock {
+      #custom-brightness, #custom-metar, #custom-fs, #custom-duplicati, #custom-fwupd, #custom-timew, #memory, #cpu, #bluetooth, #network, #custom-ping, #pulseaudio, #battery, #clock {
         padding: 0 10px;
         margin: 0 2px;
         background-color: ${c.base02};
@@ -326,6 +335,12 @@ in
 
       #custom-metar.warning {
         color: ${c.yellow};
+      }
+
+      #custom-fs.critical {
+        background-color: ${c.base3};
+        color: ${c.base01};
+        border: 2px solid ${c.red};
       }
 
       #custom-ping.warning {

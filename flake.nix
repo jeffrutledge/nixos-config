@@ -65,6 +65,7 @@
           ./disko-config.nix
           ./configuration.nix
           ./btrfs-snapshots.nix
+          ./btrfs-scrub.nix
           inputs.home-manager.nixosModules.home-manager
           {
             home-manager = {
@@ -87,6 +88,7 @@
           packages = [
             (pkgs.callPackage ./home/waybar/scripts/metar.nix { })
             (pkgs.callPackage ./home/waybar/scripts/duplicati.nix { })
+            (pkgs.callPackage ./home/waybar/scripts/fs-status.nix { })
             (pkgs.callPackage ./home/waybar/scripts/timew.nix { })
             (pkgs.callPackage ./home/waybar/scripts/wifi-status.nix { })
             (pkgs.callPackage ./home/waybar/scripts/ping-status.nix { })
