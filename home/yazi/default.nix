@@ -2,6 +2,16 @@
 {
   programs.yazi = {
     enable = true;
+    # Default keymap binds `d` to trash (recoverable) and `D` to permanent
+    # delete. `d` is used far more often, so make it delete outright instead
+    # of leaving files sitting in ~/.local/share/Trash.
+    keymap.mgr.prepend_keymap = [
+      {
+        on = [ "d" ];
+        run = "remove --permanently";
+        desc = "Permanently delete the selected files";
+      }
+    ];
   };
 
   xdg.desktopEntries.yazi = {
