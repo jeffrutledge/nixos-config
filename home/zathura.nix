@@ -44,4 +44,6 @@ in
       render-loading-bg = colors.base0;
     };
   };
+
+  xdg.mimeApps.defaultApplications."application/pdf" = "org.pwmt.zathura-pdf-mupdf.desktop";
 }
