@@ -368,6 +368,12 @@ in
               class = "Spotify";
             };
           }
+          {
+            command = "floating enable, resize set 1000 600";
+            criteria = {
+              title = "^termfilechooser$";
+            };
+          }
         ];
 
         startup = [

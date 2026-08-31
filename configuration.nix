@@ -127,6 +127,29 @@
 
   security.polkit.enable = true;
 
+  xdg.portal = {
+    enable = true;
+    wlr.enable = true;
+    extraPortals = [
+      pkgs.xdg-desktop-portal-gtk
+      pkgs.xdg-desktop-portal-termfilechooser
+    ];
+    config.common = {
+      default = [ "gtk" ];
+      "org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
+    };
+    # programs.sway (nixos/modules/programs/wayland/sway.nix) sets its own
+    # xdg.portal.config.sway with default = ["gtk"]. Since our session's
+    # XDG_CURRENT_DESKTOP=sway, the portal daemon loads sway-portals.conf
+    # instead of the generic portals.conf, so the FileChooser override above
+    # is ignored unless it's also set here.
+    config.sway."org.freedesktop.impl.portal.FileChooser" = [ "termfilechooser" ];
+  };
+
+  environment.sessionVariables = {
+    GTK_USE_PORTAL = "1";
+  };
+
   programs = {
     sway = {
       enable = true;

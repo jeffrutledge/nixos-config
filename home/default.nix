@@ -29,6 +29,7 @@
     ./readline.nix
     ./ai-coding.nix
     ./snap
+    ./yazi
   ];
 
   config = {
