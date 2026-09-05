@@ -27,5 +27,6 @@
     xournalpp
     obsidian
     markdownlint-cli
+    (callPackage ./weekly-note { })
   ];
 }
