@@ -2,6 +2,9 @@
 {
   programs.yazi = {
     enable = true;
+    # Pin the pre-25.11 default explicitly so behavior doesn't change out
+    # from under us when home.stateVersion is eventually bumped.
+    shellWrapperName = "yy";
     # Default keymap binds `d` to trash (recoverable) and `D` to permanent
     # delete. `d` is used far more often, so make it delete outright instead
     # of leaving files sitting in ~/.local/share/Trash.
