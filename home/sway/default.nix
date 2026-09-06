@@ -22,6 +22,16 @@ let
     internal = m_internal;
     external = m_external;
   };
+  swaySession = import ../sway-sessions {
+    inherit pkgs;
+    internal = m_internal;
+    external = m_external;
+    focusColor = c.blue;
+    visibleColor = c.violet;
+    urgentColor = c.red;
+    sessionColor = c.cyan;
+  };
+  sessionCli = "${swaySession.cli}/bin/sway-session";
   mute = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 1";
   lockCmd = "${preLockPrefix}${mute} && ${pkgs.swaylock}/bin/swaylock -fF";
   caffeine = import ../caffeine { inherit pkgs; };
@@ -192,54 +202,54 @@ in
           "${mod}+${move_mod}+k" = "move up";
           "${mod}+${move_mod}+l" = "move right";
 
-          # Workspace Navigation (Internal Monitor)
-          "${mod}+1" = "workspace 1:1";
-          "${mod}+2" = "workspace 3:2";
-          "${mod}+3" = "workspace 5:3";
-          "${mod}+4" = "workspace 7:4";
-          "${mod}+5" = "workspace 9:5";
-          "${mod}+6" = "workspace 11:6";
-          "${mod}+7" = "workspace 13:7";
-          "${mod}+8" = "workspace 15:8";
-          "${mod}+9" = "workspace 17:9";
-          "${mod}+0" = "workspace 19:10";
+          # Workspace Navigation (current session's workspaces 1-10)
+          "${mod}+1" = "exec ${sessionCli} goto 1";
+          "${mod}+2" = "exec ${sessionCli} goto 2";
+          "${mod}+3" = "exec ${sessionCli} goto 3";
+          "${mod}+4" = "exec ${sessionCli} goto 4";
+          "${mod}+5" = "exec ${sessionCli} goto 5";
+          "${mod}+6" = "exec ${sessionCli} goto 6";
+          "${mod}+7" = "exec ${sessionCli} goto 7";
+          "${mod}+8" = "exec ${sessionCli} goto 8";
+          "${mod}+9" = "exec ${sessionCli} goto 9";
+          "${mod}+0" = "exec ${sessionCli} goto 10";
 
-          # Workspace Navigation (External Monitor)
-          "${mod}+F1" = "workspace 2:f1";
-          "${mod}+F2" = "workspace 4:f2";
-          "${mod}+F3" = "workspace 6:f3";
-          "${mod}+F4" = "workspace 8:f4";
-          "${mod}+F5" = "workspace 10:f5";
-          "${mod}+F6" = "workspace 12:f6";
-          "${mod}+F7" = "workspace 14:f7";
-          "${mod}+F8" = "workspace 16:f8";
-          "${mod}+F9" = "workspace 18:f9";
-          "${mod}+F10" = "workspace 20:f10";
+          # Workspace Navigation (current session's workspaces f1-f10, external monitor)
+          "${mod}+F1" = "exec ${sessionCli} goto f1";
+          "${mod}+F2" = "exec ${sessionCli} goto f2";
+          "${mod}+F3" = "exec ${sessionCli} goto f3";
+          "${mod}+F4" = "exec ${sessionCli} goto f4";
+          "${mod}+F5" = "exec ${sessionCli} goto f5";
+          "${mod}+F6" = "exec ${sessionCli} goto f6";
+          "${mod}+F7" = "exec ${sessionCli} goto f7";
+          "${mod}+F8" = "exec ${sessionCli} goto f8";
+          "${mod}+F9" = "exec ${sessionCli} goto f9";
+          "${mod}+F10" = "exec ${sessionCli} goto f10";
           "${mod}+m" = "workspace 90:msgs";
           "${mod}+t" = "workspace 91:todo";
           "${mod}+period" = "workspace 92:music";
 
-          # Move to workspace
-          "${mod}+${move_mod}+1" = "move container to workspace 1:1";
-          "${mod}+${move_mod}+2" = "move container to workspace 3:2";
-          "${mod}+${move_mod}+3" = "move container to workspace 5:3";
-          "${mod}+${move_mod}+4" = "move container to workspace 7:4";
-          "${mod}+${move_mod}+5" = "move container to workspace 9:5";
-          "${mod}+${move_mod}+6" = "move container to workspace 11:6";
-          "${mod}+${move_mod}+7" = "move container to workspace 13:7";
-          "${mod}+${move_mod}+8" = "move container to workspace 15:8";
-          "${mod}+${move_mod}+9" = "move container to workspace 17:9";
-          "${mod}+${move_mod}+0" = "move container to workspace 19:10";
-          "${mod}+${move_mod}+F1" = "move container to workspace 2:f1";
-          "${mod}+${move_mod}+F2" = "move container to workspace 4:f2";
-          "${mod}+${move_mod}+F3" = "move container to workspace 6:f3";
-          "${mod}+${move_mod}+F4" = "move container to workspace 8:f4";
-          "${mod}+${move_mod}+F5" = "move container to workspace 10:f5";
-          "${mod}+${move_mod}+F6" = "move container to workspace 12:f6";
-          "${mod}+${move_mod}+F7" = "move container to workspace 14:f7";
-          "${mod}+${move_mod}+F8" = "move container to workspace 16:f8";
-          "${mod}+${move_mod}+F9" = "move container to workspace 18:f9";
-          "${mod}+${move_mod}+F10" = "move container to workspace 20:f10";
+          # Move to workspace (current session's workspaces 1-10)
+          "${mod}+${move_mod}+1" = "exec ${sessionCli} move 1";
+          "${mod}+${move_mod}+2" = "exec ${sessionCli} move 2";
+          "${mod}+${move_mod}+3" = "exec ${sessionCli} move 3";
+          "${mod}+${move_mod}+4" = "exec ${sessionCli} move 4";
+          "${mod}+${move_mod}+5" = "exec ${sessionCli} move 5";
+          "${mod}+${move_mod}+6" = "exec ${sessionCli} move 6";
+          "${mod}+${move_mod}+7" = "exec ${sessionCli} move 7";
+          "${mod}+${move_mod}+8" = "exec ${sessionCli} move 8";
+          "${mod}+${move_mod}+9" = "exec ${sessionCli} move 9";
+          "${mod}+${move_mod}+0" = "exec ${sessionCli} move 10";
+          "${mod}+${move_mod}+F1" = "exec ${sessionCli} move f1";
+          "${mod}+${move_mod}+F2" = "exec ${sessionCli} move f2";
+          "${mod}+${move_mod}+F3" = "exec ${sessionCli} move f3";
+          "${mod}+${move_mod}+F4" = "exec ${sessionCli} move f4";
+          "${mod}+${move_mod}+F5" = "exec ${sessionCli} move f5";
+          "${mod}+${move_mod}+F6" = "exec ${sessionCli} move f6";
+          "${mod}+${move_mod}+F7" = "exec ${sessionCli} move f7";
+          "${mod}+${move_mod}+F8" = "exec ${sessionCli} move f8";
+          "${mod}+${move_mod}+F9" = "exec ${sessionCli} move f9";
+          "${mod}+${move_mod}+F10" = "exec ${sessionCli} move f10";
           "${mod}+${move_mod}+m" = "move container to workspace 90:msgs";
           "${mod}+${move_mod}+t" = "move container to workspace 91:todo";
           "${mod}+${move_mod}+greater" = "move container to workspace 92:music";
@@ -248,9 +258,13 @@ in
           "${mod}+semicolon" = "split h";
           "${mod}+v" = "split v";
           "${mod}+f" = "fullscreen toggle";
-          "${mod}+s" = "layout stacking";
+          "${mod}+${move_mod}+w" = "layout stacking";
           "${mod}+w" = "layout tabbed";
           "${mod}+space" = "focus mode_toggle";
+
+          # Sessions (tmux-style: each session has its own workspaces 1-10, f1-f10)
+          "${mod}+s" = "exec ${sessionCli} switch";
+          "${mod}+${move_mod}+s" = "exec ${sessionCli} relocate";
 
           # Modes
           "${mod}+e" = "mode \"exit\"";
@@ -262,87 +276,10 @@ in
         };
 
         # Workspace Assignments to Monitors
+        # (session workspaces 1-10/f1-f10 are pinned to the internal/external
+        # output at runtime by sway-session; only the fixed external-monitor
+        # workspaces need static assignment here)
         workspaceOutputAssign = [
-          {
-            workspace = "1:1";
-            output = m_internal;
-          }
-          {
-            workspace = "3:2";
-            output = m_internal;
-          }
-          {
-            workspace = "5:3";
-            output = m_internal;
-          }
-          {
-            workspace = "7:4";
-            output = m_internal;
-          }
-          {
-            workspace = "9:5";
-            output = m_internal;
-          }
-          {
-            workspace = "11:6";
-            output = m_internal;
-          }
-          {
-            workspace = "13:7";
-            output = m_internal;
-          }
-          {
-            workspace = "15:8";
-            output = m_internal;
-          }
-          {
-            workspace = "17:9";
-            output = m_internal;
-          }
-          {
-            workspace = "19:10";
-            output = m_internal;
-          }
-          {
-            workspace = "2:f1";
-            output = m_external;
-          }
-          {
-            workspace = "4:f2";
-            output = m_external;
-          }
-          {
-            workspace = "6:f3";
-            output = m_external;
-          }
-          {
-            workspace = "8:f4";
-            output = m_external;
-          }
-          {
-            workspace = "10:f5";
-            output = m_external;
-          }
-          {
-            workspace = "12:f6";
-            output = m_external;
-          }
-          {
-            workspace = "14:f7";
-            output = m_external;
-          }
-          {
-            workspace = "16:f8";
-            output = m_external;
-          }
-          {
-            workspace = "18:f9";
-            output = m_external;
-          }
-          {
-            workspace = "20:f10";
-            output = m_external;
-          }
           {
             workspace = "90:msgs";
             output = m_external;

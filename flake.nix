@@ -82,6 +82,10 @@
         let
           caffeine = pkgs.callPackage ./home/caffeine { };
           brightness = pkgs.callPackage ./home/brightness { };
+          swaySession = pkgs.callPackage ./home/sway-sessions {
+            internal = "eDP-1";
+            external = "DP-1";
+          };
         in
         pkgs.mkShell {
           inherit (pre-commit-check) shellHook;
@@ -102,6 +106,8 @@
             caffeine.status
             brightness.update
             brightness.status
+            swaySession.cli
+            swaySession.bar
           ];
         };
       nixosConfigurations.check-target = nixpkgs.lib.nixosSystem {

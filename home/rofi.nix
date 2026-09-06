@@ -10,6 +10,7 @@ in
     font = "${f.family} ${toString f.size}";
     extraConfig = {
       modi = "drun";
+      matching = "fuzzy";
       kb-row-up = "Up,Control+k";
       kb-row-down = "Down,Control+j";
       kb-remove-to-eol = "";

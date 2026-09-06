@@ -16,6 +16,15 @@ let
   fsStatusScript = import ./scripts/fs-status.nix { inherit pkgs; };
   caffeine = import ../caffeine { inherit pkgs; };
   brightness = import ../brightness { inherit pkgs; };
+  swaySession = import ../sway-sessions {
+    inherit pkgs;
+    internal = "eDP-1";
+    external = "DP-1";
+    focusColor = c.blue;
+    visibleColor = c.violet;
+    urgentColor = c.red;
+    sessionColor = c.cyan;
+  };
 
   btToggle = pkgs.writeShellScript "bt-toggle" ''
     powered=$(${pkgs.systemd}/bin/busctl get-property org.bluez /org/bluez/hci0 org.bluez.Adapter1 Powered 2>/dev/null)
@@ -57,7 +66,7 @@ in
         position = "bottom";
         height = 24;
         modules-left = [
-          "sway/workspaces"
+          "custom/sway-session"
           "sway/mode"
         ];
         modules-center = [ ];
@@ -82,13 +91,10 @@ in
           "clock"
         ];
 
-        "sway/workspaces" = {
-          disable-scroll = true;
-          all-outputs = true;
-          format = "{name}";
-          rewrite = {
-            "^\\d+:(.*)$" = "$1";
-          };
+        "custom/sway-session" = {
+          exec = "${swaySession.bar}/bin/sway-session-bar";
+          return-type = "json";
+          on-click = "${swaySession.cli}/bin/sway-session switch";
         };
 
         "custom/brightness" = {
@@ -237,30 +243,15 @@ in
         color: ${c.base1};
       }
 
-      /* inactive_workspace: base03 border, base03 bg, base01 text */
-      #workspaces button {
-        padding: 0 5px;
-        background-color: ${c.base03};
-        color: ${c.base01};
+      #custom-sway-session {
+        padding: 0 10px;
+        background-color: ${c.base02};
+        color: ${c.base1};
         border: 2px solid ${c.base03};
       }
 
-      /* focused_workspace: blue border, base02 bg, base1 text */
-      #workspaces button.focused {
-        background-color: ${c.base02};
-        color: ${c.base1};
-        border: 2px solid ${c.blue};
-      }
-
-      /* active_workspace: violet border, base02 bg, base1 text */
-      #workspaces button.visible:not(.focused) {
-        background-color: ${c.base02};
-        color: ${c.base1};
-        border: 2px solid ${c.violet};
-      }
-
-      /* urgent_workspace: red border, base3 bg, base01 text */
-      #workspaces button.urgent {
+      /* urgent workspace somewhere in the current session */
+      #custom-sway-session.urgent {
         background-color: ${c.base3};
         color: ${c.base01};
         border: 2px solid ${c.red};
