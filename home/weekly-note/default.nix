@@ -27,6 +27,58 @@ pkgs.writeShellApplication {
       ' "$1" | grep -viE '^[[:space:]]*-[[:space:]]*\[[xX]\]' || true
     }
 
+    sync_tasks() {
+      local src="$1" dst="$2"
+      local tasks
+      tasks=$(carry_tasks "$src")
+      [ -z "$tasks" ] && return
+
+      local existing
+      existing=$(carry_tasks "$dst")
+
+      local new_lines=() line
+      while IFS= read -r line; do
+        [ -z "$line" ] && continue
+        if ! grep -qxF -- "$line" <<<"$existing"; then
+          new_lines+=("$line")
+        fi
+      done <<<"$tasks"
+
+      [ "''${#new_lines[@]}" -eq 0 ] && return
+
+      local add
+      add=$(printf '%s\n' "''${new_lines[@]}")
+      add="$add"$'\n'
+
+      awk -v add="$add" '
+        BEGIN { intasks=0; injected=0; found=0; blanks="" }
+        /^## Tasks[[:space:]]*$/ { print; intasks=1; found=1; next }
+        intasks && /^## / {
+          if (!injected) { printf "%s", add; injected=1 }
+          printf "%s", blanks
+          blanks=""
+          intasks=0
+          print
+          next
+        }
+        intasks && /^[[:space:]]*$/ { blanks = blanks $0 "\n"; next }
+        intasks {
+          if (blanks != "") { printf "%s", blanks; blanks="" }
+          print
+          next
+        }
+        { print }
+        END {
+          if (intasks) {
+            if (!injected) { printf "%s", add; injected=1 }
+            printf "%s", blanks
+          }
+          if (!found) { printf "\n## Tasks\n%s", add }
+        }
+      ' "$dst" >"$dst.tmp"
+      mv "$dst.tmp" "$dst"
+    }
+
     ensure_note() {
       local d="$1"
       local file="$NOTES_DIR/$d.md"
@@ -75,7 +127,18 @@ pkgs.writeShellApplication {
       current=$(monday_of_today)
 
       local files=()
-      files+=("$(ensure_note "$current")")
+      local current_file
+      current_file=$(ensure_note "$current")
+      files+=("$current_file")
+
+      local next="" next_file=""
+      next=$(date -d "$current +7 days" +%Y%m%d)
+      next_file="$NOTES_DIR/$next.md"
+      if [ -f "$next_file" ]; then
+        sync_tasks "$current_file" "$next_file"
+      else
+        ensure_note "$next" >/dev/null
+      fi
 
       local i d
       for ((i = 1; i < n; i++)); do
