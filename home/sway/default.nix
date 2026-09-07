@@ -29,7 +29,7 @@ let
     focusColor = c.blue;
     visibleColor = c.violet;
     urgentColor = c.red;
-    sessionColor = c.cyan;
+    plainColor = c.base01;
   };
   sessionCli = "${swaySession.cli}/bin/sway-session";
   mute = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ 1";
@@ -265,6 +265,7 @@ in
           # Sessions (tmux-style: each session has its own workspaces 1-10, f1-f10)
           "${mod}+s" = "exec ${sessionCli} switch";
           "${mod}+${move_mod}+s" = "exec ${sessionCli} relocate";
+          "${mod}+n" = "exec ${sessionCli} rename";
 
           # Modes
           "${mod}+e" = "mode \"exit\"";

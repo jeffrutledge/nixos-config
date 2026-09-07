@@ -5,7 +5,7 @@
   focusColor ? "blue",
   visibleColor ? "violet",
   urgentColor ? "red",
-  sessionColor ? "cyan",
+  plainColor ? "grey",
 }:
 let
   swaymsg = "${pkgs.sway}/bin/swaymsg";
@@ -182,25 +182,25 @@ in
       }
 
       # Move the whole current workspace (not just the focused window) into
-      # another session, keeping focus on it.
+      # another session, keeping focus on it. It lands on the smallest free
+      # slot in the target session (1-10, then f1-f10), not the slot it
+      # currently occupies.
       relocate() {
-        local current_ws src_session slot target_session final_slot
+        local current_ws src_session target_session final_slot
         current_ws=$(focused_workspace_name)
-        if [[ "$current_ws" =~ ^([a-zA-Z][a-zA-Z0-9_-]*):(f?[0-9]+)$ ]]; then
-          src_session="''${BASH_REMATCH[1]}"
-          slot="''${BASH_REMATCH[2]}"
-        else
+        if ! [[ "$current_ws" =~ ${sessionWorkspaceRe} ]]; then
           ${pkgs.libnotify}/bin/notify-send "sway-session" \
             "Current workspace \"$current_ws\" isn't part of a session; nothing to move."
           exit 1
         fi
+        src_session="''${current_ws%%:*}"
 
         target_session=$(pick_session "move to session") || exit 0
         if [ "$target_session" = "$src_session" ]; then
           exit 0
         fi
 
-        if ! final_slot=$(find_free_slot "$target_session" "$slot"); then
+        if ! final_slot=$(find_free_slot "$target_session" "1"); then
           ${pkgs.libnotify}/bin/notify-send "sway-session" \
             "Session \"$target_session\" has no free workspace slots"
           exit 1
@@ -208,6 +208,31 @@ in
 
         ${swaymsg} "rename workspace to \"$target_session:$final_slot\"" >/dev/null
         ${swaymsg} "move workspace to output $(output_for_slot "$final_slot")" >/dev/null
+      }
+
+      # Rename the current session, renaming every one of its workspaces in
+      # place (windows stay put; only the session prefix changes).
+      rename_session() {
+        local session new old slot
+        session=$(current_session)
+        new=$(pick_session "rename $session to") || exit 0
+
+        if [ "$new" = "$session" ]; then
+          exit 0
+        fi
+
+        if ${swaymsg} -t get_workspaces \
+          | ${jq} -e --arg new "$new" 'any(.[]; .name | startswith($new + ":"))' >/dev/null; then
+          ${pkgs.libnotify}/bin/notify-send "sway-session" "Session \"$new\" already exists"
+          exit 1
+        fi
+
+        while read -r old; do
+          slot="''${old#*:}"
+          ${swaymsg} "rename workspace \"$old\" to \"$new:$slot\"" >/dev/null
+        done < <(${swaymsg} -t get_workspaces | ${jq} -r --arg session "$session" '
+          [ .[].name | select(startswith($session + ":")) ] | .[]
+        ')
       }
 
       main() {
@@ -235,8 +260,11 @@ in
         relocate)
           relocate
           ;;
+        rename)
+          rename_session
+          ;;
         *)
-          echo "Usage: sway-session {current|goto SLOT|move SLOT|switch|relocate}" >&2
+          echo "Usage: sway-session {current|goto SLOT|move SLOT|switch|relocate|rename}" >&2
           exit 1
           ;;
         esac
@@ -269,32 +297,32 @@ in
 
         printf '%s' "$ws_json" | ${jq} -c --arg session "$session" '
           (
-            [ .[] | select(.name | startswith($session + ":"))
-              | (.name | split(":")[1]) as $slot
-              | { slot: $slot,
-                  sort_key: (if ($slot | startswith("f")) then (100 + ($slot[1:] | tonumber)) else ($slot | tonumber) end),
-                  focused, visible, urgent } ]
+            [ .[] |
+              if (.name | startswith($session + ":")) then
+                (.name | split(":")[1]) as $slot
+                | { lbl: $slot,
+                    sort_key: (if ($slot | startswith("f")) then (100 + ($slot[1:] | tonumber)) else ($slot | tonumber) end),
+                    focused, visible, urgent }
+              elif (.name | test("^[0-9]+:")) then
+                { lbl: (.name | sub("^[0-9]+:"; "")),
+                  sort_key: (1000 + .num),
+                  focused, visible, urgent }
+              else empty
+              end
+            ]
             | sort_by(.sort_key)
-          ) as $swin
-          | (
-            [ .[] | select(.name | test("^[0-9]+:")) ]
-            | sort_by(.num)
-            | map(.name | sub("^[0-9]+:"; ""))
-          ) as $fixed
-          | ($swin | map(
-              if .focused then "<span foreground=\"${focusColor}\"><b>[\(.slot)]</b></span>"
-              elif .urgent then "<span foreground=\"${urgentColor}\">!\(.slot)!</span>"
-              elif .visible then "<span foreground=\"${visibleColor}\">(\(.slot))</span>"
-              else .slot
+          ) as $items
+          | ($items | map(
+              if .focused then "<span foreground=\"${focusColor}\"><b>[\(.lbl)]</b></span>"
+              elif .urgent then "<span foreground=\"${urgentColor}\">!\(.lbl)!</span>"
+              elif .visible then "<span foreground=\"${visibleColor}\">(\(.lbl))</span>"
+              else ("<span foreground=\"${plainColor}\"> " + .lbl + " </span>")
               end
             ) | join(" ")
-          ) as $swin_text
-          | ($fixed | join(" ")) as $fixed_text
+          ) as $items_text
           | {
-              text: ("<span foreground=\"${sessionColor}\"><b>" + $session + "</b></span>  " + $swin_text
-                     + (if ($fixed_text | length) > 0 then "   " + $fixed_text else "" end)),
-              tooltip: ("session: " + $session),
-              class: (if ($swin | map(.urgent) | any) then "urgent" else "" end)
+              text: ($session + "  " + $items_text),
+              tooltip: ("session: " + $session)
             }
         '
       }

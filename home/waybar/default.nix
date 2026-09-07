@@ -23,7 +23,7 @@ let
     focusColor = c.blue;
     visibleColor = c.violet;
     urgentColor = c.red;
-    sessionColor = c.cyan;
+    plainColor = c.base01;
   };
 
   btToggle = pkgs.writeShellScript "bt-toggle" ''
@@ -244,17 +244,9 @@ in
       }
 
       #custom-sway-session {
-        padding: 0 10px;
-        background-color: ${c.base02};
+        padding: 0 6px;
+        background-color: ${c.base03};
         color: ${c.base1};
-        border: 2px solid ${c.base03};
-      }
-
-      /* urgent workspace somewhere in the current session */
-      #custom-sway-session.urgent {
-        background-color: ${c.base3};
-        color: ${c.base01};
-        border: 2px solid ${c.red};
       }
 
       #mode {
