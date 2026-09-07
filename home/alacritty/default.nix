@@ -23,6 +23,37 @@ in
         };
       };
 
+      hints = {
+        enabled = [
+          {
+            # Restore the default URL-opening hint (Ctrl+Shift+O), since
+            # defining `hints.enabled` replaces Alacritty's built-in default.
+            command = "xdg-open";
+            hyperlinks = true;
+            post_processing = true;
+            persist = false;
+            mouse.enabled = true;
+            binding = {
+              key = "O";
+              mods = "Control|Shift";
+            };
+            regex = "(ipfs:|ipns:|magnet:|mailto:|gemini://|gopher://|https://|http://|news:|file:|git://|ssh:|ftp://)[^ \t\n\"'<>^`\\\\]+";
+          }
+          {
+            # tmux-fingers style: hint words/paths and insert the pick at the cursor.
+            action = "Paste";
+            post_processing = false;
+            persist = false;
+            mouse.enabled = false;
+            binding = {
+              key = "P";
+              mods = "Control|Shift";
+            };
+            regex = "[a-zA-Z0-9_@:./~-]{2,}";
+          }
+        ];
+      };
+
       colors = {
         primary = {
           background = c.base03;
