@@ -15,7 +15,7 @@ let
   # "1".."10" (pinned to the internal output) or "f1".."f10" (pinned to the
   # external output). The session name always starts with a letter, so
   # these never collide with the numeric-prefixed fixed workspaces (like
-  # "90:msgs") that aren't part of any session.
+  # "91:todo") that aren't part of any session.
   sessionNameRe = "^[a-zA-Z][a-zA-Z0-9_-]*$";
   sessionWorkspaceRe = "^[a-zA-Z][a-zA-Z0-9_-]*:f?[0-9]+$";
 
@@ -132,7 +132,10 @@ in
 
       switch() {
         local choice n target existed
-        choice=$(pick_session "session") || exit 0
+        choice="''${1:-}"
+        if [ -z "$choice" ]; then
+          choice=$(pick_session "session") || exit 0
+        fi
 
         n=1
         if [ -f "$STATE_DIR/last/$choice" ]; then
@@ -142,6 +145,28 @@ in
         if workspace_exists "$target"; then existed=yes; else existed=no; fi
         ${swaymsg} "workspace $target" >/dev/null
         pin_if_new "$existed" "$n"
+      }
+
+      # Move the focused container into another session, landing on that
+      # session's last-visited slot (default "1"), the same slot "switch"
+      # would land on.
+      move_session() {
+        local session="$1" n target existed original
+        n=1
+        if [ -f "$STATE_DIR/last/$session" ]; then
+          n=$(<"$STATE_DIR/last/$session")
+        fi
+        target="$session:$n"
+        if workspace_exists "$target"; then existed=yes; else existed=no; fi
+        original=$(focused_workspace_name)
+        ${swaymsg} "move container to workspace $target" >/dev/null
+        if [ "$existed" = "no" ]; then
+          ${swaymsg} "workspace $target" >/dev/null
+          pin_if_new "no" "$n"
+          if [ -n "$original" ]; then
+            ${swaymsg} "workspace $original" >/dev/null
+          fi
+        fi
       }
 
       slot_index() {
@@ -255,7 +280,14 @@ in
           move "$2"
           ;;
         switch)
-          switch
+          switch "''${2:-}"
+          ;;
+        move-session)
+          [ $# -ge 2 ] || {
+            echo "Usage: sway-session move-session SESSION" >&2
+            exit 1
+          }
+          move_session "$2"
           ;;
         relocate)
           relocate
@@ -264,7 +296,7 @@ in
           rename_session
           ;;
         *)
-          echo "Usage: sway-session {current|goto SLOT|move SLOT|switch|relocate|rename}" >&2
+          echo "Usage: sway-session {current|goto SLOT|move SLOT|switch [SESSION]|move-session SESSION|relocate|rename}" >&2
           exit 1
           ;;
         esac

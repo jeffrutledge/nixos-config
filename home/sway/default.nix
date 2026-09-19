@@ -225,9 +225,9 @@ in
           "${mod}+F8" = "exec ${sessionCli} goto f8";
           "${mod}+F9" = "exec ${sessionCli} goto f9";
           "${mod}+F10" = "exec ${sessionCli} goto f10";
-          "${mod}+m" = "workspace 90:msgs";
-          "${mod}+t" = "workspace 91:todo";
-          "${mod}+period" = "workspace 92:music";
+          "${mod}+m" = "exec ${sessionCli} switch msgs";
+          "${mod}+t" = "exec ${sessionCli} switch tasks";
+          "${mod}+period" = "exec ${sessionCli} switch music";
 
           # Move to workspace (current session's workspaces 1-10)
           "${mod}+${move_mod}+1" = "exec ${sessionCli} move 1";
@@ -250,9 +250,9 @@ in
           "${mod}+${move_mod}+F8" = "exec ${sessionCli} move f8";
           "${mod}+${move_mod}+F9" = "exec ${sessionCli} move f9";
           "${mod}+${move_mod}+F10" = "exec ${sessionCli} move f10";
-          "${mod}+${move_mod}+m" = "move container to workspace 90:msgs";
-          "${mod}+${move_mod}+t" = "move container to workspace 91:todo";
-          "${mod}+${move_mod}+greater" = "move container to workspace 92:music";
+          "${mod}+${move_mod}+m" = "exec ${sessionCli} move-session msgs";
+          "${mod}+${move_mod}+t" = "exec ${sessionCli} move-session tasks";
+          "${mod}+${move_mod}+greater" = "exec ${sessionCli} move-session music";
 
           # Layouts
           "${mod}+semicolon" = "split h";
@@ -276,32 +276,17 @@ in
           "${mod}+c" = "exec ${caffeineToggle}/bin/caffeine-toggle";
         };
 
-        # Workspace Assignments to Monitors
-        # (session workspaces 1-10/f1-f10 are pinned to the internal/external
-        # output at runtime by sway-session; only the fixed external-monitor
-        # workspaces need static assignment here)
-        workspaceOutputAssign = [
-          {
-            workspace = "90:msgs";
-            output = m_external;
-          }
-          {
-            workspace = "91:todo";
-            output = m_external;
-          }
-          {
-            workspace = "92:music";
-            output = m_external;
-          }
-        ];
+        # Session workspaces (1-10/f1-f10, including msgs/music/tasks) are
+        # pinned to the internal/external output at runtime by sway-session,
+        # so no static workspaceOutputAssign is needed.
 
         assigns = {
-          "90:msgs" = [ { class = "Thunderbird"; } ];
+          "msgs:1" = [ { class = "Thunderbird"; } ];
         };
 
         window.commands = [
           {
-            command = "move to workspace 92:music";
+            command = "move to workspace music:1";
             criteria = {
               class = "Spotify";
             };
