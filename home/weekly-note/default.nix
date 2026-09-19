@@ -12,11 +12,11 @@ pkgs.writeShellApplication {
     monday_of_today() {
       local dow
       dow=$(date +%u)
-      date -d "-$((dow - 1)) days" +%Y%m%d
+      date -d "-$((dow - 1)) days" +%Y-%m-%d
     }
 
     week_date() {
-      date -d "$1 -$(($2 * 7)) days" +%Y%m%d
+      date -d "$1 -$(($2 * 7)) days" +%Y-%m-%d
     }
 
     carry_tasks() {
@@ -132,7 +132,7 @@ pkgs.writeShellApplication {
       files+=("$current_file")
 
       local next="" next_file=""
-      next=$(date -d "$current +7 days" +%Y%m%d)
+      next=$(date -d "$current +7 days" +%Y-%m-%d)
       next_file="$NOTES_DIR/$next.md"
       if [ -f "$next_file" ]; then
         sync_tasks "$current_file" "$next_file"
