@@ -44,9 +44,6 @@ in
       STATE_DIR="''${XDG_STATE_HOME:-$HOME/.local/state}/sway-sessions"
       mkdir -p "$STATE_DIR/last"
 
-      # Canonical slot order: 1-10 (internal), then f1-f10 (external).
-      SLOTS=(1 2 3 4 5 6 7 8 9 10 f1 f2 f3 f4 f5 f6 f7 f8 f9 f10)
-
       ${outputForSlotSh}
 
       current_session() {
@@ -169,49 +166,11 @@ in
         fi
       }
 
-      slot_index() {
-        local target="$1" i
-        for i in "''${!SLOTS[@]}"; do
-          if [ "''${SLOTS[$i]}" = "$target" ]; then
-            printf '%s' "$i"
-            return 0
-          fi
-        done
-        return 1
-      }
-
-      # Find a free slot for $session, preferring $preferred; if taken,
-      # walk the canonical slot order (wrapping past f10 back to 1) until a
-      # free one turns up. Prints the slot and returns 0, or returns 1 if
-      # every slot in the session is occupied.
-      find_free_slot() {
-        local session="$1" preferred="$2" idx total count candidate
-        if ! workspace_exists "$session:$preferred"; then
-          printf '%s' "$preferred"
-          return 0
-        fi
-        if ! idx=$(slot_index "$preferred"); then
-          return 1
-        fi
-        total=''${#SLOTS[@]}
-        count=1
-        while [ "$count" -lt "$total" ]; do
-          candidate="''${SLOTS[$(( (idx + count) % total ))]}"
-          if ! workspace_exists "$session:$candidate"; then
-            printf '%s' "$candidate"
-            return 0
-          fi
-          count=$((count + 1))
-        done
-        return 1
-      }
-
-      # Move the whole current workspace (not just the focused window) into
-      # another session, keeping focus on it. It lands on the smallest free
-      # slot in the target session (1-10, then f1-f10), not the slot it
-      # currently occupies.
+      # Move the focused container (not the whole workspace) into another,
+      # interactively-picked session, landing on that session's
+      # last-visited slot. Keeps focus on the current workspace.
       relocate() {
-        local current_ws src_session target_session final_slot
+        local current_ws src_session target_session
         current_ws=$(focused_workspace_name)
         if ! [[ "$current_ws" =~ ${sessionWorkspaceRe} ]]; then
           ${pkgs.libnotify}/bin/notify-send "sway-session" \
@@ -225,14 +184,7 @@ in
           exit 0
         fi
 
-        if ! final_slot=$(find_free_slot "$target_session" "1"); then
-          ${pkgs.libnotify}/bin/notify-send "sway-session" \
-            "Session \"$target_session\" has no free workspace slots"
-          exit 1
-        fi
-
-        ${swaymsg} "rename workspace to \"$target_session:$final_slot\"" >/dev/null
-        ${swaymsg} "move workspace to output $(output_for_slot "$final_slot")" >/dev/null
+        move_session "$target_session"
       }
 
       # Rename the current session, renaming every one of its workspaces in
