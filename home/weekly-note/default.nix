@@ -27,56 +27,32 @@ pkgs.writeShellApplication {
       ' "$1" | grep -viE '^[[:space:]]*-[[:space:]]*\[[xX]\]' || true
     }
 
-    sync_tasks() {
-      local src="$1" dst="$2"
-      local tasks
-      tasks=$(carry_tasks "$src")
-      [ -z "$tasks" ] && return
-
-      local existing
-      existing=$(carry_tasks "$dst")
-
-      local new_lines=() line
-      while IFS= read -r line; do
-        [ -z "$line" ] && continue
-        if ! grep -qxF -- "$line" <<<"$existing"; then
-          new_lines+=("$line")
-        fi
-      done <<<"$tasks"
-
-      [ "''${#new_lines[@]}" -eq 0 ] && return
-
-      local add
-      add=$(printf '%s\n' "''${new_lines[@]}")
-      add="$add"$'\n'
-
-      awk -v add="$add" '
-        BEGIN { intasks=0; injected=0; found=0; blanks="" }
-        /^## Tasks[[:space:]]*$/ { print; intasks=1; found=1; next }
-        intasks && /^## / {
-          if (!injected) { printf "%s", add; injected=1 }
-          printf "%s", blanks
-          blanks=""
-          intasks=0
+    replace_tasks_section() {
+      local dst="$1" body="$2"
+      awk -v body="$body" '
+        BEGIN { intasks=0; found=0 }
+        /^## Tasks[[:space:]]*$/ {
           print
+          printf "%s\n", body
+          intasks=1
+          found=1
           next
         }
-        intasks && /^[[:space:]]*$/ { blanks = blanks $0 "\n"; next }
-        intasks {
-          if (blanks != "") { printf "%s", blanks; blanks="" }
-          print
-          next
-        }
+        intasks && /^## / { intasks=0; print ""; print; next }
+        intasks { next }
         { print }
         END {
-          if (intasks) {
-            if (!injected) { printf "%s", add; injected=1 }
-            printf "%s", blanks
-          }
-          if (!found) { printf "\n## Tasks\n%s", add }
+          if (!found) { printf "\n## Tasks\n%s\n", body }
         }
       ' "$dst" >"$dst.tmp"
       mv "$dst.tmp" "$dst"
+    }
+
+    sync_tasks() {
+      local src="$1" dst="$2"
+      local body
+      body=$(carry_tasks "$src")
+      replace_tasks_section "$dst" "$body"
     }
 
     ensure_note() {
@@ -109,7 +85,22 @@ pkgs.writeShellApplication {
       printf '%s\n' "$file"
     }
 
+    sync_current_forward() {
+      local current current_file next next_file
+      current=$(monday_of_today)
+      current_file=$(ensure_note "$current")
+      next=$(date -d "$current +7 days" +%Y-%m-%d)
+      next_file=$(ensure_note "$next")
+      sync_tasks "$current_file" "$next_file"
+      printf '%s\n' "$current_file"
+    }
+
     main() {
+      if [ "''${1:-}" = "--sync" ]; then
+        sync_current_forward >/dev/null
+        return
+      fi
+
       local n=1
       if [ $# -gt 0 ]; then
         case "$1" in
@@ -123,23 +114,13 @@ pkgs.writeShellApplication {
         esac
       fi
 
+      local current_file
+      current_file=$(sync_current_forward)
+
       local current
       current=$(monday_of_today)
 
-      local files=()
-      local current_file
-      current_file=$(ensure_note "$current")
-      files+=("$current_file")
-
-      local next="" next_file=""
-      next=$(date -d "$current +7 days" +%Y-%m-%d)
-      next_file="$NOTES_DIR/$next.md"
-      if [ -f "$next_file" ]; then
-        sync_tasks "$current_file" "$next_file"
-      else
-        ensure_note "$next" >/dev/null
-      fi
-
+      local files=("$current_file")
       local i d
       for ((i = 1; i < n; i++)); do
         d=$(week_date "$current" "$i")
