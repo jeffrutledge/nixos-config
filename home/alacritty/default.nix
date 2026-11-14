@@ -48,6 +48,20 @@ in
             binding = {
               key = "P";
               mods = "Control|Shift";
+              mode = "~Vi";
+            };
+            regex = "[a-zA-Z0-9_@:./~-]{2,}";
+          }
+          {
+            # Same hint in vi mode, but copy the pick to the clipboard instead.
+            action = "Copy";
+            post_processing = false;
+            persist = false;
+            mouse.enabled = false;
+            binding = {
+              key = "P";
+              mods = "Control|Shift";
+              mode = "Vi";
             };
             regex = "[a-zA-Z0-9_@:./~-]{2,}";
           }
