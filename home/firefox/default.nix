@@ -93,6 +93,7 @@ in
 
         # --- DOWNLOADS ---
         "browser.download.useDownloadDir" = false; # Always ask where to save
+        "browser.download.open_pdf_attachments_inline" = true;
 
         # --- SESSION ---
         "browser.startup.page" = 3; # Restore previous session
