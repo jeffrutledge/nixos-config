@@ -15,6 +15,25 @@
         desc = "Permanently delete the selected files";
       }
     ];
+    settings = {
+      opener.firefox = [
+        {
+          run = "${pkgs.firefox}/bin/firefox %s";
+          desc = "Firefox";
+          orphan = true;
+        }
+      ];
+      open.prepend_rules = [
+        {
+          mime = "text/html";
+          use = [
+            "firefox"
+            "edit"
+            "reveal"
+          ];
+        }
+      ];
+    };
   };
 
   xdg.desktopEntries.yazi = {
